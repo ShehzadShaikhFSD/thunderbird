@@ -40,6 +40,7 @@ const Prescriber = () => {
 
   return (
     <div className="prescriber-container">
+      <h1>OptioRX</h1>
       <h2>Prescriber Registration</h2>
       <form onSubmit={handleSubmit}>
         {/* First Name */}
