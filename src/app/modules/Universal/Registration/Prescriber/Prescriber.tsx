@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Prescriber.css';
-
+import Header from './Header/Header';
 const Prescriber = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -39,9 +39,12 @@ const Prescriber = () => {
   };
 
   return (
+    <>
+    
     <div className="prescriber-container">
-      <h1>OptioRX</h1>
+      <Header></Header>
       <h2>Prescriber Registration</h2>
+      <h3>Create an account to sign up for OptioRX Medicinals</h3>
       <form onSubmit={handleSubmit}>
         {/* First Name */}
         <label htmlFor="firstName">First Name:</label>
@@ -254,6 +257,8 @@ const Prescriber = () => {
         <button type="submit">Submit</button>
       </form>
     </div>
+    </>
+    
   );
 };
 
