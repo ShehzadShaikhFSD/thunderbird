@@ -15,8 +15,9 @@ import Home from '../pages/Staticpages/Home/Home' ;
 import About from '../pages/Staticpages/About/About' ;
 import Prescriber from '../modules/Universal/Registration/Prescriber/Prescriber'
 import Lists from '../modules/Universal/lists/Lists'
+import Login from '../modules/Universal/Login/Login'
 import {App} from '../App'
-
+import Navbar from '../modules/Universal/Header/Navbar/Navbar';
 /**
  * Base URL of the website.
  *
@@ -28,6 +29,7 @@ const AppRoutes: FC = () => {
   const {currentUser} = useAuth()
   return (
     <BrowserRouter basename={BASE_URL}>
+      <Navbar />
       <Routes>
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
@@ -44,6 +46,8 @@ const AppRoutes: FC = () => {
               <Route path='/' element={<Home/>} />
               <Route path='/about' element={<About/>} />
               <Route path='/Prescriber/Register' element={<Prescriber/>} />
+              <Route path='/Prescriber/Login' element={<Login/>} />
+
               <Route path='/Prescriber/lists' element={<Lists/>} />
 
 

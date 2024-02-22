@@ -36,12 +36,7 @@ const Lists = () => {
 
   return (
     <div className="container mt-8">
-        <Link to="/" className="home-link">Go to Home</Link>
-        <Link to="/Prescriber/lists" className="home-link">Prescriber lists</Link>
-        <Link to="/prescriber/Register" className="home-link">Sign Up (Prescriber)</Link>
-        <Link to="/About" className="home-link">Mission</Link>
-
-      <h1 className="text-center mt-5 mb-4">Prescribers</h1>
+      <h1 className="text-center mt-5 mb-4">All Prescribers</h1>
       <div className="table-responsive">
         <table className="table table-bordered table-hover">
           <thead className="thead-dark">
