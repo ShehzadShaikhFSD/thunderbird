@@ -32,10 +32,29 @@ const Prescriber = () => {
     });
   };
 
-  const handleSubmit = (e : any ) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     // Add your form submission logic here
     console.log(formData);
+    try {
+      const response = await fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const responseData = await response.json();
+      console.log(responseData);
+      alert("Thanks !! Your Form is Submitted Successfully , we'll let you know once your account is active.")
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
