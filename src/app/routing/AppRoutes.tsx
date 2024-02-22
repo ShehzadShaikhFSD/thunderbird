@@ -14,7 +14,7 @@ import Notfound from '../pages/Notfound/Notfound';
 import Home from '../pages/Staticpages/Home/Home' ;
 import About from '../pages/Staticpages/About/About' ;
 import Prescriber from '../modules/Universal/Registration/Prescriber/Prescriber'
-
+import Lists from '../modules/Universal/lists/Lists'
 import {App} from '../App'
 
 /**
@@ -44,6 +44,7 @@ const AppRoutes: FC = () => {
               <Route path='/' element={<Home/>} />
               <Route path='/about' element={<About/>} />
               <Route path='/Prescriber/Register' element={<Prescriber/>} />
+              <Route path='/Prescriber/lists' element={<Lists/>} />
 
 
               <Route path='*' element={<Notfound/>} />

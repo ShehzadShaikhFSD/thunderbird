@@ -1,0 +1,27 @@
+.about-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .about-container h1 {
+    margin-bottom: 20px;
+  }
+  
+  .back-to-home {
+    margin-top: 20px;
+  }
+  
+  .home-link {
+    text-decoration: none;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .home-link:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  

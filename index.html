@@ -12,6 +12,7 @@
   <link rel="stylesheet" id="layout-styles-anchor" href="/splash-screen.css" />
 </head>
 
+
 <body id="kt_body" class="page-loading">
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <!--begin::Theme mode setup on page load-->
@@ -31,11 +32,79 @@
   <!--end::Theme mode setup on page load-->
 
   <div id="root"></div>
+  <style>
+
+.navbar {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  .navbar-brand {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  .navbar-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .navbar-item {
+    margin-left: 20px;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-link:hover {
+    color: #f8f9fa;
+  }
+  
+
+    .about-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .about-container h1 {
+    margin-bottom: 20px;
+  }
+  
+  .back-to-home {
+    margin-top: 20px;
+  }
+  
+  .home-link {
+    text-decoration: none;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .home-link:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  </style>
 
   <!--begin::Loading markup-->
   <div id="splash-screen" class="splash-screen">
-    <img src="media/logos/default-dark.svg" class="dark-logo" alt="Metronic dark logo" />
-    <img src="media/logos/default.svg" class="light-logo" alt="Metronic light logo" />
+
     <span>Loading ...</span>
   </div>
   <!--end::Loading markup-->
