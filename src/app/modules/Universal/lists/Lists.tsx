@@ -1,7 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
+interface Prescriber {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  credentials: string;
+  practiceName: string;
+  practiceAddressLine1: string;
+  practiceAddressLine2: string;
+  practiceCity: string;
+  practiceState: string;
+  practiceZipCode: string;
+  npiNumber: string;
+  medicalLicenseState: string;
+  licenseNumber: string;
+  optInPhysicianSearch: boolean;
+  agreeToPrivacyPolicy: boolean;
+  acceptBAA: boolean;
+  isVerifiedPrescriber: boolean;
+}
+
 const Lists = () => {
-  const [prescribers, setPrescribers] = useState([]);
+  const [prescribers, setPrescribers] = useState<Prescriber[]>([]);
 
   useEffect(() => {
     // Fetch data from the API
@@ -45,7 +68,7 @@ const Lists = () => {
           </thead>
           <tbody>
             {prescribers.map(prescriber => (
-              <tr key={prescriber._id}>
+              <tr key={prescriber?._id}>
                 <td>{prescriber.firstName}</td>
                 <td>{prescriber.lastName}</td>
                 <td>{prescriber.email}</td>
