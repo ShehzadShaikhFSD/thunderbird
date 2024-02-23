@@ -53,6 +53,31 @@ const Lists = () => {
     }
   };
 
+  const handleApprove = (id: string) => {
+    fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers/${id}/approve`, {
+      method: 'POST'
+    })
+    .then(response => {
+      if (response.ok) {
+        // If the API call is successful, update the prescriber list to reflect the change
+        setPrescribers(prevPrescribers => prevPrescribers.map(prescriber => {
+          if (prescriber._id === id) {
+            return { ...prescriber, isVerifiedPrescriber: true };
+          }
+          return prescriber;
+        }));
+        // Show a modal indicating approval
+        alert('Prescriber approved');
+      } else {
+        throw new Error('Failed to approve prescriber');
+      }
+    })
+    .catch(error => {
+      console.error('Error approving prescriber:', error);
+      alert('Error approving prescriber');
+    });
+  };
+
   return (
     <div className="container mt-8">
       <h1 className="text-center mt-5 mb-4">All Prescribers</h1>
@@ -85,6 +110,7 @@ const Lists = () => {
                 <th>Agree To Privacy Policy</th>
                 <th>Accept BAA</th>
                 <th>Is Verified Prescriber</th>
+                <th>Actions</th> {/* New column for actions */}
               </tr>
             </thead>
             <tbody>
@@ -108,6 +134,16 @@ const Lists = () => {
                   <td>{prescriber.agreeToPrivacyPolicy.toString()}</td>
                   <td>{prescriber.acceptBAA.toString()}</td>
                   <td>{prescriber.isVerifiedPrescriber.toString()}</td>
+                  <td>
+                    {/* Button to approve the prescriber */}
+                    {!prescriber.isVerifiedPrescriber && (
+                      <button onClick={() => handleApprove(prescriber._id)}>Approve Prescriber</button>
+                    )}
+
+                    {prescriber.isVerifiedPrescriber && (
+                     <span> Verified </span>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

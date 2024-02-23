@@ -1,0 +1,21 @@
+{
+    "firstName": "New ",
+    "lastName": "New ",
+    "email": "New ali3113@gmail.com",
+    "phoneNumber": "+917798193956",
+    "credentials": "md",
+    "practiceName": "New ",
+    "practiceAddressLine1": "Address line 1",
+    "practiceAddressLine2": "Address line 2",
+    "practiceCity": "Illinios",
+    "practiceState": "IL",
+    "practiceZipCode": "77002",
+    "npiNumber": "9856327410",
+    "medicalLicenseState": "state2",
+    "licenseNumber": "9856327410",
+    "password": "98hghghkc56jhyvgkuvkvghggu32hvhjvhviug7410",
+    "optInPhysicianSearch": true,
+    "agreeToPrivacyPolicy": true,
+    "acceptBAA": true,
+    "isVerifiedPrescriber":false
+}
