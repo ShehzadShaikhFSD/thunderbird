@@ -201,8 +201,15 @@ const Prescriber = () => {
           required
         >
           {/* Add your state options here */}
-          <option value="state1">State 1</option>
+          <option value="state1">Default State</option>
+          <option value="state2">State 1</option>
           <option value="state2">State 2</option>
+          <option value="state2">State 3</option>
+          <option value="state2">State 4</option>
+          <option value="state2">State 5</option>
+          <option value="state2">State 6</option>
+
+
           {/* Add more states as needed */}
         </select>
 
@@ -216,6 +223,23 @@ const Prescriber = () => {
           onChange={handleChange}
           required
         />
+        {/*  */}
+        <label htmlFor="practiceState">Practice State:</label>
+          <select
+            id="practiceState"
+            name="practiceState"
+            value={formData?.practiceState}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select State</option>
+            <option value="state1">State 1</option>
+            <option value="state2">State 2</option>
+            {/* Add more states as needed */}
+          </select>
+
+
+        {/*  */}
 
         {/* Password */}
         <label htmlFor="password">Password:</label>
@@ -247,7 +271,7 @@ const Prescriber = () => {
             checked={formData?.optInPhysicianSearch}
             onChange={handleChange}
           />
-          Opt In to Physician Search
+          &nbsp;  &nbsp;  &nbsp;  Opt In to Physician Search
         </label>
 
         {/* Agree to Privacy Policy */}
@@ -258,7 +282,7 @@ const Prescriber = () => {
             checked={formData?.agreeToPrivacyPolicy}
             onChange={handleChange}
           />
-          Agree to our Privacy Policy
+        &nbsp;  &nbsp;  &nbsp;  Agree to our Privacy Policy
         </label>
 
         {/* Accept BAA */}
@@ -269,7 +293,7 @@ const Prescriber = () => {
             checked={formData?.acceptBAA}
             onChange={handleChange}
           />
-          Accept our BAA
+         &nbsp;  &nbsp;  &nbsp;   Accept our BAA
         </label>
 
 
