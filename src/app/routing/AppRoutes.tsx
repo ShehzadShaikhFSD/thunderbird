@@ -18,6 +18,7 @@ import Lists from '../modules/Universal/lists/Lists'
 import Login from '../modules/Universal/Login/Login'
 import {App} from '../App'
 import Navbar from '../modules/Universal/Header/Navbar/Navbar';
+import Wrapper from '../modules/Universal/Dashboard/PrescriberWrapper/Wrapper'
 /**
  * Base URL of the website.
  *
@@ -32,21 +33,12 @@ const AppRoutes: FC = () => {
       <Navbar />
       <Routes>
         <Route element={<App />}>
-          <Route path='error/*' element={<ErrorsPage />} />
-          <Route path='logout' element={<Logout />} />
-          {currentUser ? (
+          
             <>
-              <Route path='/*' element={<PrivateRoutes />} />
-              <Route index element={<Navigate to='/dashboard' />} />
-            </>
-          ) : (
-            <>
-              <Route path='auth/*' element={<AuthPage />} />
-              {/* <Route path='*' element={<Navigate to='/auth' />} /> */}
               <Route path='/' element={<Home/>} />
               <Route path='/about' element={<About/>} />
               <Route path='/Prescriber/Register' element={<Prescriber/>} />
-              <Route path='/Prescriber/Login' element={<Login/>} />
+              <Route path='/Prescriber/Dashboard' element={<Wrapper/>} />
 
               <Route path='/Prescriber/lists' element={<Lists/>} />
 
@@ -54,7 +46,7 @@ const AppRoutes: FC = () => {
               <Route path='*' element={<Notfound/>} />
               
             </>
-          )}
+     
         </Route>
       </Routes>
     </BrowserRouter>
