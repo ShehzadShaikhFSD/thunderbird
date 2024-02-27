@@ -14,7 +14,7 @@ const Wrapper = () => {
     <>
       <Header />
       {id ? <Profile id={id} /> : <p>No ID provided</p>}
-      {id ? <CreatePatient /> : <p>No ID provided</p>}
+      {id ? <CreatePatient id={id} /> : <p>No ID provided</p>}
     </>
   );
 };

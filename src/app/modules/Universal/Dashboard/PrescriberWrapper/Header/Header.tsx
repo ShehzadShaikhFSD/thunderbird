@@ -6,7 +6,7 @@ const Header = () => {
       
       
     <h1>
-      Prescriber Profile
+      Prescriber dashboard header
     </h1>
       
       

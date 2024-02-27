@@ -24,6 +24,7 @@ interface PrescriberData {
 }
 
 const Profile: React.FC<ProfileProps> = ({ id }) => {
+  console.log(id)
   const [prescriberData, setPrescriberData] = useState<PrescriberData | null>(null);
 
   useEffect(() => {
