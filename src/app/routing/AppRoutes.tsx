@@ -38,7 +38,7 @@ const AppRoutes: FC = () => {
               <Route path='/' element={<Home/>} />
               <Route path='/about' element={<About/>} />
               <Route path='/Prescriber/Register' element={<Prescriber/>} />
-              <Route path='/Prescriber/Dashboard' element={<Wrapper/>} />
+              <Route path='/Prescriber/Dashboard/:id' element={<Wrapper/>} />
 
               <Route path='/Prescriber/lists' element={<Lists/>} />
 

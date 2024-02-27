@@ -48,7 +48,7 @@ const PrescriberLogin = () => {
         cookies.set('SITE-TYPE', "DERMA", { path: '/' });
         // cookies.set('SITE-TYPE', "DERMA", { path: '/' });
         setShowModal(false);
-        navigate('/'); // Redirect to home page
+        navigate(`/Prescriber/Dashboard/${data.prescriberId}`); // Redirect to home page
       } else {
         const errorData = await response.json();
         console.log(errorData)
