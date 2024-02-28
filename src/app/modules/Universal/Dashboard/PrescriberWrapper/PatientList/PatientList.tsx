@@ -1,4 +1,7 @@
+// PatientList.tsx
 import React, { useState, useEffect } from 'react';
+import OrderModal from '../Orders/OrderModal/OrderModal';
+import { Button } from 'react-bootstrap';
 
 interface Patient {
   _id: string;
@@ -19,6 +22,17 @@ interface PatientListProps {
 
 const PatientList: React.FC<PatientListProps> = ({ id }) => {
   const [patients, setPatients] = useState<Patient[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPatientName, setSelectedPatientName] = useState("");
+
+  const handleOrderClick = (firstName: string) => {
+    setShowModal(true);
+    setSelectedPatientName(firstName);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -49,6 +63,7 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
               <th>City</th>
               <th>State</th>
               <th>Zip Code</th>
+              <th>Prescribe</th>
             </tr>
           </thead>
           <tbody>
@@ -62,10 +77,16 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
                 <td>{patient.City}</td>
                 <td>{patient.State}</td>
                 <td>{patient.ZipCode}</td>
+                <td>
+                  <Button variant="primary" onClick={() => handleOrderClick(patient.firstName)}>
+                    Order
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <OrderModal show={showModal} onHide={handleCloseModal} patientName={selectedPatientName} />
       </div>
     </div>
   );

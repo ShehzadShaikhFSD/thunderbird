@@ -6,6 +6,7 @@ import Profile from './Profile/Profile';
 import CreatePatient from './CreatePatient/CreatePatient';
 import PatientList from './PatientList/PatientList';
 import Inventory from './Inventory/Inventory';
+import Orders from './Orders/Orders';
 
 // 
 interface PrescriberData {
@@ -107,6 +108,15 @@ const Wrapper = () => {
              Inventory
             </button>
           </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === 4 ? 'active' : ''}`}
+              disabled={!isVerified}
+              onClick={() => handleTabChange(4)}
+            >
+             Orders
+            </button>
+          </li>
           {/* Add more buttons for additional tabs if needed */}
         </ul>
         <div className="tab-content">
@@ -132,6 +142,12 @@ const Wrapper = () => {
           {activeTab === 3 && (
             <div className="tab-pane fade show active">
               { id ? <Inventory id={id} /> : <p>No ID provided</p> }
+            </div>
+          )}
+          {/* Content for tab 5 */}
+          {activeTab === 4 && (
+            <div className="tab-pane fade show active">
+              { id ? <Orders id={id} /> : <p>No ID provided</p> }
             </div>
           )}
           {/* Add more content for additional tabs if needed */}
