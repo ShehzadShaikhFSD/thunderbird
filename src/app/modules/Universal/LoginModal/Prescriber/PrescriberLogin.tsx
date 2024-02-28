@@ -37,7 +37,7 @@ const PrescriberLogin = () => {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:7786/api/prescribers/signin', {
+      const response = await fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
