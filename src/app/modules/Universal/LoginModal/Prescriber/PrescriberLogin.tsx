@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -13,12 +13,16 @@ const PrescriberLogin = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+
  
   const handleSignInClick = () => {
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
+    setEmail('')
+    setError('')
+    setPassword('')
     setShowModal(false);
   };
 
@@ -33,7 +37,7 @@ const PrescriberLogin = () => {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers/signin', {
+      const response = await fetch('http://localhost:7786/api/prescribers/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +57,7 @@ const PrescriberLogin = () => {
       } else {
         const errorData = await response.json();
         console.log(errorData)
-        // setError(errorData.message );
+        setError(errorData.error );
       }
     } catch (error) {
       setError('An error occurred. Please try again later.');
@@ -63,8 +67,8 @@ const PrescriberLogin = () => {
   };
 
   return (
-    <div className='nav-dark-black'  >
-      <span  onClick={handleSignInClick}>Sign In (Prescriber)</span>
+    <div className='nav-dark-black' >
+      <span className="prescriber-login" onClick={handleSignInClick}>Sign In (Prescriber)</span>
       <Modal
         show={showModal}
         onHide={handleCloseModal}
@@ -76,13 +80,13 @@ const PrescriberLogin = () => {
         </Modal.Header>
         <Modal.Body>
           <form>
-            <div>
+            <div className="form-group">
               <label>Email:</label>
-              <input type="email" value={email} onChange={handleEmailChange} />
+              <input type="email" className="form-control" value={email} onChange={handleEmailChange} />
             </div>
-            <div>
+            <div className="form-group">
               <label>Password:</label>
-              <input type="password" value={password} onChange={handlePasswordChange} />
+              <input type="password" className="form-control" value={password} onChange={handlePasswordChange} />
             </div>
             {error && <div className="error-message">{error}</div>}
           </form>

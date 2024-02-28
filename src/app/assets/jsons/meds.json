@@ -1,0 +1,243 @@
+[
+    {
+      "id": 1,
+      "name": "Paracetamol Tablets",
+      "price": 3.99,
+      "description": "Effective for reducing fever and relieving mild to moderate pain from headaches, menstrual periods, toothaches, backaches, and cold/flu symptoms.",
+      "category": "pain relief",
+      "image": "https://example.com/paracetamol-tablets.jpg",
+      "rating": {
+        "rate": 4.5,
+        "count": 300
+      }
+    },
+    {
+      "id": 2,
+      "name": "Omeprazole Capsules",
+      "price": 12.5,
+      "description": "Used to treat certain stomach and esophagus problems (such as acid reflux, ulcers). It works by decreasing the amount of acid your stomach makes.",
+      "category": "digestive health",
+      "image": "https://example.com/omeprazole-capsules.jpg",
+      "rating": {
+        "rate": 4.2,
+        "count": 150
+      }
+    },
+    {
+      "id": 3,
+      "name": "Amoxicillin Antibiotic",
+      "price": 7.99,
+      "description": "A commonly prescribed antibiotic used to treat various bacterial infections such as pneumonia, bronchitis, urinary tract infections, and skin infections.",
+      "category": "antibiotics",
+      "image": "https://example.com/amoxicillin-antibiotic.jpg",
+      "rating": {
+        "rate": 4.7,
+        "count": 500
+      }
+    },
+    {
+      "id": 4,
+      "name": "Cetirizine Allergy Relief",
+      "price": 5.75,
+      "description": "Relieves allergy symptoms such as sneezing, itching, watery eyes, or runny nose caused by hay fever or other allergies.",
+      "category": "allergy relief",
+      "image": "https://example.com/cetirizine-allergy-relief.jpg",
+      "rating": {
+        "rate": 4.0,
+        "count": 200
+      }
+    },
+    {
+      "id": 5,
+      "name": "Ibuprofen Gel",
+      "price": 6.49,
+      "description": "Topical gel for relief of pain and inflammation associated with minor backache, joint pain, muscle strains, sprains, bruises, and arthritis.",
+      "category": "topical pain relief",
+      "image": "https://example.com/ibuprofen-gel.jpg",
+      "rating": {
+        "rate": 4.3,
+        "count": 250
+      }
+    },
+    {
+      "id": 6,
+      "name": "Loratadine Tablets",
+      "price": 4.75,
+      "description": "Relieves symptoms of hay fever and other allergies, such as runny nose, sneezing, itching, watery eyes, and itching of the throat or nose.",
+      "category": "allergy relief",
+      "image": "https://example.com/loratadine-tablets.jpg",
+      "rating": {
+        "rate": 4.6,
+        "count": 180
+      }
+    },
+    {
+      "id": 7,
+      "name": "Vitamin C Chewable Tablets",
+      "price": 8.99,
+      "description": "Boosts the immune system and helps the body fight off infections. Also aids in collagen production for healthy skin and wound healing.",
+      "category": "vitamins",
+      "image": "https://example.com/vitamin-c-tablets.jpg",
+      "rating": {
+        "rate": 4.8,
+        "count": 400
+      }
+    },
+    {
+      "id": 8,
+      "name": "Salbutamol Inhaler",
+      "price": 15.25,
+      "description": "Relieves symptoms of asthma, bronchitis, and other lung conditions by relaxing muscles in the airways and increasing airflow to the lungs.",
+      "category": "respiratory health",
+      "image": "https://example.com/salbutamol-inhaler.jpg",
+      "rating": {
+        "rate": 4.4,
+        "count": 320
+      }
+    },
+    {
+      "id": 9,
+      "name": "Dextromethorphan Cough Syrup",
+      "price": 6.99,
+      "description": "Suppresses dry, hacking coughs by decreasing activity in the part of the brain that causes coughing. Provides temporary relief from cough due to minor throat and bronchial irritation.",
+      "category": "cough relief",
+      "image": "https://example.com/dextromethorphan-cough-syrup.jpg",
+      "rating": {
+        "rate": 4.2,
+        "count": 280
+      }
+    },
+    {
+      "id": 10,
+      "name": "Naproxen Sodium Tablets",
+      "price": 9.49,
+      "description": "Used to relieve pain from various conditions such as headaches, muscle aches, tendonitis, dental pain, and menstrual cramps. Also reduces swelling and joint stiffness caused by arthritis.",
+      "category": "pain relief",
+      "image": "https://example.com/naproxen-sodium-tablets.jpg",
+      "rating": {
+        "rate": 4.1,
+        "count": 210
+      }
+    },
+    {
+      "id": 11,
+      "name": "Simethicone Gas Relief Drops",
+      "price": 5.49,
+      "description": "Relieves symptoms of gas, bloating, and discomfort caused by swallowed air or certain foods. Helps break up gas bubbles in the stomach and intestines.",
+      "category": "gas relief",
+      "image": "https://example.com/simethicone-gas-relief-drops.jpg",
+      "rating": {
+        "rate": 4.3,
+        "count": 150
+      }
+    },
+    {
+      "id": 12,
+      "name": "Loperamide Anti-Diarrheal Tablets",
+      "price": 7.25,
+      "description": "Helps control symptoms of diarrhea, including loose stools, frequent bowel movements, and abdominal cramping. Slows down bowel movements to reduce the number of bowel movements and make stools less watery.",
+      "category": "anti-diarrheal",
+      "image": "https://example.com/loperamide-anti-diarrheal-tablets.jpg",
+      "rating": {
+        "rate": 4.6,
+        "count": 190
+      }
+    },
+    {
+      "id": 13,
+      "name": "Hydrocortisone Cream",
+      "price": 6.99,
+      "description": "Relieves itching, redness, and swelling associated with various skin conditions such as eczema, dermatitis, insect bites, poison ivy, and allergic reactions.",
+      "category": "skin care",
+      "image": "https://example.com/hydrocortisone-cream.jpg",
+      "rating": {
+        "rate": 4.0,
+        "count": 220
+      }
+    },
+    {
+      "id": 14,
+      "name": "Diphenhydramine Sleep Aid Tablets",
+      "price": 9.99,
+      "description": "Helps relieve occasional sleeplessness by providing temporary relief from difficulty falling asleep. Also helps reduce the time it takes to fall asleep and improves sleep quality.",
+      "category": "sleep aids",
+      "image": "https://example.com/diphenhydramine-sleep-aid-tablets.jpg",
+      "rating": {
+        "rate": 4.2,
+        "count": 180
+      }
+    },
+    {
+      "id": 15,
+      "name": "Mupirocin Antibacterial Ointment",
+      "price": 8.49,
+      "description": "Treats skin infections caused by certain bacteria, such as impetigo, folliculitis, and furuncle. Also prevents bacterial growth on the skin and promotes healing.",
+      "category": "antibacterial",
+      "image": "https://example.com/mupirocin-antibacterial-ointment.jpg",
+      "rating": {
+        "rate": 4.7,
+        "count": 250
+      }
+    },
+    {
+      "id": 16,
+      "name": "Fluticasone Nasal Spray",
+      "price": 14.75,
+      "description": "Relieves symptoms of hay fever or other upper respiratory allergies, such as stuffy or runny nose, itching, and sneezing. Also reduces swelling and inflammation in the nasal passages.",
+      "category": "nasal spray",
+      "image": "https://example.com/fluticasone-nasal-spray.jpg",
+      "rating": {
+        "rate": 4.4,
+        "count": 300
+      }
+    },
+    {
+      "id": 17,
+      "name": "Metronidazole Antibiotic",
+      "price": 10.99,
+      "description": "Treats bacterial infections of the vagina, stomach, skin, joints, and respiratory tract. Also used to treat certain types of parasites, such as Giardia and amebas.",
+      "category": "antibiotics",
+      "image": "https://example.com/metronidazole-antibiotic.jpg",
+      "rating": {
+        "rate": 4.6,
+        "count": 180
+      }
+    },
+    {
+      "id": 18,
+      "name": "Esomeprazole Magnesium Capsules",
+      "price": 13.25,
+      "description": "Used to treat symptoms of gastroesophageal reflux disease (GERD), such as heartburn, acid regurgitation, and difficulty swallowing. Also prevents stomach ulcers caused by NSAIDs.",
+      "category": "digestive health",
+      "image": "https://example.com/esomeprazole-magnesium-capsules.jpg",
+      "rating": {
+        "rate": 4.3,
+        "count": 220
+      }
+    },
+    {
+      "id": 19,
+      "name": "Benzoyl Peroxide Acne Treatment Gel",
+      "price": 6.99,
+      "description": "Kills acne-causing bacteria and helps clear up acne pimples, blackheads, and whiteheads. Also helps prevent new acne blemishes from forming.",
+      "category": "acne treatment",
+      "image": "https://example.com/benzoyl-peroxide-acne-treatment-gel.jpg",
+      "rating": {
+        "rate": 4.5,
+        "count": 190
+      }
+    },
+    {
+      "id": 20,
+      "name": "Hydroxyzine Antihistamine Tablets",
+      "price": 7.49,
+      "description": "Relieves symptoms of anxiety and tension, such as increased heart rate and sweating. Also used to treat itching caused by allergic reactions and certain skin conditions.",
+      "category": "antihistamines",
+      "image": "https://example.com/hydroxyzine-antihistamine-tablets.jpg",
+      "rating": {
+        "rate": 4.2,
+        "count": 160
+      }
+    }
+  ]
+  

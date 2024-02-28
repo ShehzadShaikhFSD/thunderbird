@@ -18,7 +18,7 @@ const Prescriber = () => {
     medicalLicenseState: '',
     licenseNumber: '',
     password: '',
-    confirmPassword: '',
+    // confirmPassword: '',
     optInPhysicianSearch: false,
     agreeToPrivacyPolicy: false,
     acceptBAA: false,
@@ -253,7 +253,7 @@ const Prescriber = () => {
         />
 
         {/* Confirm Password */}
-        <label htmlFor="confirmPassword">Confirm Password:</label>
+        {/* <label htmlFor="confirmPassword">Confirm Password:</label>
         <input
           type="password"
           id="confirmPassword"
@@ -261,7 +261,7 @@ const Prescriber = () => {
           value={formData?.confirmPassword}
           onChange={handleChange}
           required
-        />
+        /> */}
         {/*  */}
         {/* Opt In to Physician Search */}
         <label>

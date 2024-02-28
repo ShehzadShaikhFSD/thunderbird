@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
 interface Prescriber {
@@ -31,7 +32,7 @@ const Lists = () => {
   const [password, setPassword] = useState<string>('');
 
   useEffect(() => {
-    if (username  === 'admin' && password === 'admin') {
+    if (username === 'admin' && password === 'admin') {
       // Make API call
       fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers')
         .then(response => response.json())
@@ -57,38 +58,58 @@ const Lists = () => {
     fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers/${id}/approve`, {
       method: 'POST'
     })
-    .then(response => {
-      if (response.ok) {
-        // If the API call is successful, update the prescriber list to reflect the change
-        setPrescribers(prevPrescribers => prevPrescribers.map(prescriber => {
-          if (prescriber._id === id) {
-            return { ...prescriber, isVerifiedPrescriber: true };
-          }
-          return prescriber;
-        }));
-        // Show a modal indicating approval
-        alert('Prescriber approved');
-      } else {
-        throw new Error('Failed to approve prescriber');
-      }
-    })
-    .catch(error => {
-      console.error('Error approving prescriber:', error);
-      alert('Error approving prescriber');
-    });
+      .then(response => {
+        if (response.ok) {
+          // If the API call is successful, update the prescriber list to reflect the change
+          setPrescribers(prevPrescribers =>
+            prevPrescribers.map(prescriber => {
+              if (prescriber._id === id) {
+                return { ...prescriber, isVerifiedPrescriber: true };
+              }
+              return prescriber;
+            })
+          );
+          // Show a modal indicating approval
+          alert('Prescriber approved');
+        } else {
+          throw new Error('Failed to approve prescriber');
+        }
+      })
+      .catch(error => {
+        console.error('Error approving prescriber:', error);
+        alert('Error approving prescriber');
+      });
   };
 
   return (
     <div className="container mt-8">
-      <h1 className="text-center mt-5 mb-4">All Prescribers</h1>
-      <Modal  isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-        <h2>Login</h2>
-        <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button onClick={handleLogin}>Login</button>
+      <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)} >
+        <Modal.Header closeButton>
+          <Modal.Title>Admin Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            className="form-control mb-3"
+            placeholder="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            className="form-control mb-3"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <Button variant="primary" onClick={handleLogin}>
+            Login
+          </Button>
+        </Modal.Body>
       </Modal>
       {prescribers.length > 0 && (
         <div className="table-responsive">
+      <h1 className="text-center mt-5 mb-4">All Prescribers</h1>
           <table className="table table-bordered table-hover">
             <thead className="thead-dark">
               <tr>
@@ -137,12 +158,9 @@ const Lists = () => {
                   <td>
                     {/* Button to approve the prescriber */}
                     {!prescriber.isVerifiedPrescriber && (
-                      <button onClick={() => handleApprove(prescriber._id)}>Approve Prescriber</button>
+                      <Button onClick={() => handleApprove(prescriber._id)}>Approve Prescriber</Button>
                     )}
-
-                    {prescriber.isVerifiedPrescriber && (
-                     <span> Verified </span>
-                    )}
+                    {prescriber.isVerifiedPrescriber && <span>Verified</span>}
                   </td>
                 </tr>
               ))}
