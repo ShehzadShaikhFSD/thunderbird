@@ -1,0 +1,9 @@
+.nav-dark-black{
+    padding-top: 6px;
+    color: #000000A6;
+    cursor: pointer;
+}
+
+.nav-dark-black:hover{
+    color: black;
+}

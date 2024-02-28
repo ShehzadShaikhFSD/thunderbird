@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Cookies from 'universal-cookie';
+import './PrescriberLogin.css'
 
 const PrescriberLogin = () => {
   const navigate = useNavigate(); // Initialize navigate function
@@ -62,8 +63,8 @@ const PrescriberLogin = () => {
   };
 
   return (
-    <div>
-      <span onClick={handleSignInClick}>Sign In (Prescriber)</span>
+    <div className='nav-dark-black'  >
+      <span  onClick={handleSignInClick}>Sign In (Prescriber)</span>
       <Modal
         show={showModal}
         onHide={handleCloseModal}
