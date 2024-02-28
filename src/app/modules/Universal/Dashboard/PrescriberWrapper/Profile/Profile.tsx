@@ -24,7 +24,6 @@ interface PrescriberData {
 }
 
 const Profile: React.FC<ProfileProps> = ({ id }) => {
-  console.log(id)
   const [prescriberData, setPrescriberData] = useState<PrescriberData | null>(null);
 
   useEffect(() => {
@@ -44,28 +43,32 @@ const Profile: React.FC<ProfileProps> = ({ id }) => {
     fetchPrescriberData();
   }, [id]);
 
-
   return (
-    <div>
+    <div className="container mt-5">
       {prescriberData ? (
-        <div>
-          <p>ID: {prescriberData._id}</p>
-          <p>Name: {prescriberData.firstName} {prescriberData.lastName}</p>
-          <p>Email: {prescriberData.email}</p>
-          <p>Phone Number: {prescriberData.phoneNumber}</p>
-          <p>Credentials: {prescriberData.credentials}</p>
-          <p>Practice Name: {prescriberData.practiceName}</p>
-          <p>Practice Address: {prescriberData.practiceAddressLine1}, {prescriberData.practiceAddressLine2}, {prescriberData.practiceCity}, {prescriberData.practiceState}, {prescriberData.practiceZipCode}</p>
-          <p>NPI Number: {prescriberData.npiNumber}</p>
-          <p>Medical License State: {prescriberData.medicalLicenseState}</p>
-          <p>License Number: {prescriberData.licenseNumber}</p>
-          {/* Add more data to display as needed */}
+        <div className="card">
+          <div className="card-header">
+            <h5 className="card-title">Profile Details</h5>
+          </div>
+          <div className="card-body">
+            <p className="card-text">ID: {prescriberData._id}</p>
+            <p className="card-text">Name: {prescriberData.firstName} {prescriberData.lastName}</p>
+            <p className="card-text">Email: {prescriberData.email}</p>
+            <p className="card-text">Phone Number: {prescriberData.phoneNumber}</p>
+            <p className="card-text">Credentials: {prescriberData.credentials}</p>
+            <p className="card-text">Practice Name: {prescriberData.practiceName}</p>
+            <p className="card-text">Practice Address: {prescriberData.practiceAddressLine1}, {prescriberData.practiceAddressLine2}, {prescriberData.practiceCity}, {prescriberData.practiceState}, {prescriberData.practiceZipCode}</p>
+            <p className="card-text">NPI Number: {prescriberData.npiNumber}</p>
+            <p className="card-text">Medical License State: {prescriberData.medicalLicenseState}</p>
+            <p className="card-text">License Number: {prescriberData.licenseNumber}</p>
+            {/* Add more data to display as needed */}
+          </div>
         </div>
       ) : (
         <p>Loading...</p>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Profile;
