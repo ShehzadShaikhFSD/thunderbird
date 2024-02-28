@@ -24,10 +24,15 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedPatientName, setSelectedPatientName] = useState("");
+  const [selectedPatientid, setselectedPatientid] = useState("");
+  const [selectedPrescriberId, setselectedPrescriberId] = useState("");
 
-  const handleOrderClick = (firstName: string) => {
+
+  const handleOrderClick = (firstName: string , patientID : string  , prescriberID : string) => {
     setShowModal(true);
     setSelectedPatientName(firstName);
+    setselectedPatientid(patientID),
+    setselectedPrescriberId(prescriberID)
   };
 
   const handleCloseModal = () => {
@@ -78,7 +83,7 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
                 <td>{patient.State}</td>
                 <td>{patient.ZipCode}</td>
                 <td>
-                  <Button variant="primary" onClick={() => handleOrderClick(patient.firstName)}>
+                  <Button variant="primary" onClick={() => handleOrderClick(patient.firstName ,patient._id , id )}>
                     Order
                   </Button>
                 </td>
@@ -86,7 +91,7 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
             ))}
           </tbody>
         </table>
-        <OrderModal show={showModal} onHide={handleCloseModal} patientName={selectedPatientName} />
+        <OrderModal show={showModal} onHide={handleCloseModal} patientName={selectedPatientName} patientID={selectedPatientid}  prescriberID={selectedPrescriberId} />
       </div>
     </div>
   );

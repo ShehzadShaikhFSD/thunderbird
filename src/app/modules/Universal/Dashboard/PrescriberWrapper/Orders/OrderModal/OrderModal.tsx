@@ -19,9 +19,11 @@ interface OrderModalProps {
   show: boolean;
   onHide: () => void;
   patientName: string;
+  prescriberID: string;
+  patientID: string;
 }
 
-const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName }) => {
+const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName , prescriberID , patientID }) => {
   const [selectedMedicines, setSelectedMedicines] = useState<Medicine[]>([]);
   const [selectedOption, setSelectedOption] = useState('');
   const [compoundingDetails, setCompoundingDetails] = useState('');
@@ -57,6 +59,8 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName }) =>
       medicineType: selectedOption,
       selectedMedicines: selectedMedicines.map(medicine => medicine.name),
       compoundingDetails: compoundingDetails,
+      prescriberID:prescriberID ,
+      patientID : patientID
     };
     console.log(payload);
     onHide(); // Close the modal after placing the order
