@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap';
+import axios from 'axios'; // Import Axios for making HTTP requests
 import medsData from '../../../../../../assets/jsons/meds.json';
 
 interface Medicine {
@@ -23,10 +24,11 @@ interface OrderModalProps {
   patientID: string;
 }
 
-const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName , prescriberID , patientID }) => {
+const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, prescriberID, patientID }) => {
   const [selectedMedicines, setSelectedMedicines] = useState<Medicine[]>([]);
   const [selectedOption, setSelectedOption] = useState('');
   const [compoundingDetails, setCompoundingDetails] = useState('');
+  const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
     // Reset form values when modal is opened
@@ -34,6 +36,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName , pre
       setSelectedMedicines([]);
       setSelectedOption('');
       setCompoundingDetails('');
+      setMessage('');
     }
   }, [show]);
 
@@ -53,17 +56,27 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName , pre
     setCompoundingDetails(e.target.value);
   };
 
-  const handlePlaceOrderClick = () => {
-    // Create payload object
-    const payload = {
-      medicineType: selectedOption,
-      selectedMedicines: selectedMedicines.map(medicine => medicine.name),
-      compoundingDetails: compoundingDetails,
-      prescriberID:prescriberID ,
-      patientID : patientID
-    };
-    console.log(payload);
-    onHide(); // Close the modal after placing the order
+  const handlePlaceOrderClick = async () => {
+    setMessage('');
+    try {
+      // Create payload object
+      const payload = {
+        medicineType: selectedOption,
+        selectedMedicines: selectedMedicines.map(medicine => medicine.name),
+        compoundingDetails: compoundingDetails,
+        prescriberID: prescriberID,
+        patientID: patientID
+      };
+
+      // Make a POST request to place the order
+      const response = await axios.post('https://meteor-c535aaff4f8f.herokuapp.com/api/prescriber/placeOrder', payload);
+
+      // Show success message if request is successful
+      setMessage(response.data.message);
+    } catch (error : any ) {
+      // Show error message if request fails
+      setMessage(error.response.data.error);
+    }
   };
 
   return (
@@ -72,6 +85,8 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName , pre
         <Modal.Title>Order Medicine for {patientName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+      <h5> {message && <p>{message}</p>}
+       </h5>
         <Form>
           <Form.Group controlId="formMedicineType">
             <Form.Label>Select Medicine Type:</Form.Label>
