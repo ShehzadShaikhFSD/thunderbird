@@ -65,7 +65,8 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
         selectedMedicines: selectedMedicines.map(medicine => medicine.name),
         compoundingDetails: compoundingDetails,
         prescriberID: prescriberID,
-        patientID: patientID
+        patientID: patientID,
+        patientName : patientName
       };
 
       // Make a POST request to place the order
