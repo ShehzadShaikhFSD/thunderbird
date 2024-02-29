@@ -84,7 +84,7 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
                 <td>{patient.ZipCode}</td>
                 <td>
                   <Button variant="primary" onClick={() => handleOrderClick(patient.firstName ,patient._id , id )}>
-                    Order
+                    Prescribe
                   </Button>
                 </td>
               </tr>

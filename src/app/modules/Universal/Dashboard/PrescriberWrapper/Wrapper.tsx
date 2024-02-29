@@ -114,12 +114,12 @@ const Wrapper = () => {
               disabled={!isVerified}
               onClick={() => handleTabChange(4)}
             >
-             Orders
+            Prescriptions
             </button>
           </li>
           {/* Add more buttons for additional tabs if needed */}
         </ul>
-        <div className="tab-content">
+        <div className="tab-content mt-4">
           {/* Content for tab 1 */}
           {activeTab === 0 && (
             <div className="tab-pane fade show active">
