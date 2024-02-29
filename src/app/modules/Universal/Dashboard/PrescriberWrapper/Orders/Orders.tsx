@@ -23,7 +23,7 @@ const Orders: React.FC<OrderProps> = ({ id }) => {
         const queryParams = new URLSearchParams({
           prescriberID: id
         });
-        const response = await fetch(`http://localhost:7786/api/prescriber/getOrders?${queryParams}`, {
+        const response = await fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/prescriber/getOrders?${queryParams}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
