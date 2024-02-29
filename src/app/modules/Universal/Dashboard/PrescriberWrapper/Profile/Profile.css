@@ -1,0 +1,8 @@
+.max-width{
+    max-width: 800px !important;
+}
+
+p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}

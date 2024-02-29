@@ -29,6 +29,8 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
   const [selectedOption, setSelectedOption] = useState('');
   const [compoundingDetails, setCompoundingDetails] = useState('');
   const [message, setMessage] = useState<string>('');
+  const [successModalShow, setSuccessModalShow] = useState(false);
+  const [errorModalShow, setErrorModalShow] = useState(false);
 
   useEffect(() => {
     // Reset form values when modal is opened
@@ -37,6 +39,8 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
       setSelectedOption('');
       setCompoundingDetails('');
       setMessage('');
+      setSuccessModalShow(false);
+      setErrorModalShow(false);
     }
   }, [show]);
 
@@ -66,7 +70,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
         compoundingDetails: compoundingDetails,
         prescriberID: prescriberID,
         patientID: patientID,
-        patientName : patientName
+        patientName: patientName,
       };
 
       // Make a POST request to place the order
@@ -74,66 +78,97 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
 
       // Show success message if request is successful
       setMessage(response.data.message);
-    } catch (error : any ) {
+      setSuccessModalShow(true);
+    } catch (error : any) {
       // Show error message if request fails
-      setMessage(error.response.data.error);
+      setMessage(error.response?.data?.error || error.message);
+      setErrorModalShow(true);
     }
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
-      <Modal.Header closeButton>
-        <Modal.Title>Order Medicine for {patientName}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-      <h5> {message && <p>{message}</p>}
-       </h5>
-        <Form>
-          <Form.Group controlId="formMedicineType">
-            <Form.Label>Select Medicine Type:</Form.Label>
-            <select className="form-control" onChange={handleSelectChange} value={selectedOption}>
-              <option value="">Select...</option>
-              <option value="general">General</option>
-              <option value="compounding">Compounding</option>
-            </select>
-          </Form.Group>
-          {selectedOption === 'general' && (
-            <Form.Group controlId="formMedicineList">
-              <Form.Label>Choose Medicines:</Form.Label>
-              {medsData.map((medicine: Medicine) => (
-                <Form.Check
-                  key={medicine.id}
-                  type="checkbox"
-                  id={`medicine-${medicine.id}`}
-                  label={medicine.name}
-                  onChange={() => handleMedicineCheckboxChange(medicine)}
+    <>
+      <Modal show={show} onHide={onHide}>
+        <Modal.Header closeButton>
+          <Modal.Title>Order Medicine for {patientName}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h5> {message && <p>{message}</p>}</h5>
+          <Form>
+            <Form.Group controlId="formMedicineType">
+              <Form.Label>Select Medicine Type:</Form.Label>
+              <select className="form-control" onChange={handleSelectChange} value={selectedOption}>
+                <option value="">Select...</option>
+                <option value="general">General</option>
+                <option value="compounding">Compounding</option>
+              </select>
+            </Form.Group>
+            {selectedOption === 'general' && (
+              <Form.Group controlId="formMedicineList">
+                <Form.Label>Choose Medicines:</Form.Label>
+                {medsData.map((medicine: Medicine) => (
+                  <Form.Check
+                    key={medicine.id}
+                    type="checkbox"
+                    id={`medicine-${medicine.id}`}
+                    label={medicine.name}
+                    onChange={() => handleMedicineCheckboxChange(medicine)}
+                  />
+                ))}
+              </Form.Group>
+            )}
+            {selectedOption === 'compounding' && (
+              <Form.Group controlId="formCompoundingDetails">
+                <Form.Label>Enter Compounding Details:</Form.Label>
+                <FormControl
+                  as="textarea"
+                  rows={3}
+                  placeholder="Enter details..."
+                  onChange={handleCompoundingDetailsChange}
+                  value={compoundingDetails}
                 />
-              ))}
-            </Form.Group>
-          )}
-          {selectedOption === 'compounding' && (
-            <Form.Group controlId="formCompoundingDetails">
-              <Form.Label>Enter Compounding Details:</Form.Label>
-              <FormControl
-                as="textarea"
-                rows={3}
-                placeholder="Enter details..."
-                onChange={handleCompoundingDetailsChange}
-                value={compoundingDetails}
-              />
-            </Form.Group>
-          )}
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={handlePlaceOrderClick}>
-          Place Order
-        </Button>
-      </Modal.Footer>
-    </Modal>
+              </Form.Group>
+            )}
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onHide}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handlePlaceOrderClick} disabled={selectedOption === 'general' && selectedMedicines.length === 0 || selectedOption === 'compounding' && compoundingDetails.trim() === ''}>
+            Place Order
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* Success Modal */}
+      <Modal show={successModalShow} onHide={() => setSuccessModalShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Order placed successfully.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => { setSuccessModalShow(false); onHide(); }}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* Error Modal */}
+      <Modal show={errorModalShow} onHide={() => setErrorModalShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{message}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => { setErrorModalShow(false); onHide(); }}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 

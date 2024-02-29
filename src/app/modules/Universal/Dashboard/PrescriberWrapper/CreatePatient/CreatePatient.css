@@ -1,1 +1,6 @@
-
+.max-width{
+    max-width: 800px !important;
+}
+input{
+    max-height: 30px;
+}

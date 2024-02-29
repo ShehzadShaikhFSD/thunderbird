@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
-
+import './CreatePatient.css'
 interface CreatePatientProps {
   id: string;
 }
@@ -67,7 +67,7 @@ const CreatePatient: React.FC<CreatePatientProps> = ({ id }) => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 max-width">
       <h2>Create Patient</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

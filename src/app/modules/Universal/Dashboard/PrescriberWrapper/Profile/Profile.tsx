@@ -44,24 +44,54 @@ const Profile: React.FC<ProfileProps> = ({ id }) => {
   }, [id]);
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 max-width">
       {prescriberData ? (
         <div className="card">
           <div className="card-header">
             <h5 className="card-title">Profile Details</h5>
           </div>
           <div className="card-body">
-            <p className="card-text">ID: {prescriberData._id}</p>
-            <p className="card-text">Name: {prescriberData.firstName} {prescriberData.lastName}</p>
-            <p className="card-text">Email: {prescriberData.email}</p>
-            <p className="card-text">Phone Number: {prescriberData.phoneNumber}</p>
-            <p className="card-text">Credentials: {prescriberData.credentials}</p>
-            <p className="card-text">Practice Name: {prescriberData.practiceName}</p>
-            <p className="card-text">Practice Address: {prescriberData.practiceAddressLine1}, {prescriberData.practiceAddressLine2}, {prescriberData.practiceCity}, {prescriberData.practiceState}, {prescriberData.practiceZipCode}</p>
-            <p className="card-text">NPI Number: {prescriberData.npiNumber}</p>
-            <p className="card-text">Medical License State: {prescriberData.medicalLicenseState}</p>
-            <p className="card-text">License Number: {prescriberData.licenseNumber}</p>
-            {/* Add more data to display as needed */}
+            <table className="table">
+              <tbody>
+                <tr>
+                  <td>Name:</td>
+                  <td>{prescriberData.firstName} {prescriberData.lastName}</td>
+                </tr>
+                <tr>
+                  <td>Email:</td>
+                  <td>{prescriberData.email}</td>
+                </tr>
+                <tr>
+                  <td>Phone Number:</td>
+                  <td>{prescriberData.phoneNumber}</td>
+                </tr>
+                <tr>
+                  <td>Credentials:</td>
+                  <td>{prescriberData.credentials}</td>
+                </tr>
+                <tr>
+                  <td>Practice Name:</td>
+                  <td>{prescriberData.practiceName}</td>
+                </tr>
+                <tr>
+                  <td>Practice Address:</td>
+                  <td>{prescriberData.practiceAddressLine1}, {prescriberData.practiceAddressLine2}, {prescriberData.practiceCity}, {prescriberData.practiceState}, {prescriberData.practiceZipCode}</td>
+                </tr>
+                <tr>
+                  <td>NPI Number:</td>
+                  <td>{prescriberData.npiNumber}</td>
+                </tr>
+                <tr>
+                  <td>Medical License State:</td>
+                  <td>{prescriberData.medicalLicenseState}</td>
+                </tr>
+                <tr>
+                  <td>License Number:</td>
+                  <td>{prescriberData.licenseNumber}</td>
+                </tr>
+                {/* Add more data to display as needed */}
+              </tbody>
+            </table>
           </div>
         </div>
       ) : (
