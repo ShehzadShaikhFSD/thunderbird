@@ -74,9 +74,9 @@ const Orders: React.FC<OrderProps> = ({ id }) => {
             <tr key={order.index}>
               <td>{order.index + 1}</td>
               <td>{order.medicineType}</td>
-              <td>{order.selectedMedicines.join(', ')}</td>
-              <td>{order.compoundingDetails}</td>
-              <td>{order.patientName}</td>
+              <td>{order.selectedMedicines.length > 0 ? order.selectedMedicines.join(', ') : 'NA'}</td>
+              <td>{order.compoundingDetails || 'NA'}</td>
+              <td>{order.patientName || 'NA'}</td>
               <td>{order.createdAt}</td>
             </tr>
           ))}
