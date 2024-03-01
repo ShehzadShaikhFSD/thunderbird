@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form, FormControl } from 'react-bootstrap';
-import axios from 'axios'; // Import Axios for making HTTP requests
+import { Modal, Button, Form, FormControl, Row, Col, Card } from 'react-bootstrap';
+import axios from 'axios';
 import medsData from '../../../../../../assets/jsons/meds.json';
+import image from '../../../../../../assets/images/meds.jpeg';
+import './OrderModal.css';
 
 interface Medicine {
+  strength: string;
   id: number;
   name: string;
   price: number;
@@ -31,6 +34,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
   const [message, setMessage] = useState<string>('');
   const [successModalShow, setSuccessModalShow] = useState(false);
   const [errorModalShow, setErrorModalShow] = useState(false);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   useEffect(() => {
     // Reset form values when modal is opened
@@ -86,14 +90,22 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
     }
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredMedsData = medsData.filter((medicine: Medicine) =>
+    medicine.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
-      <Modal show={show} onHide={onHide}>
+      <Modal show={show} onHide={onHide} size='xl'>
         <Modal.Header closeButton>
-          <Modal.Title>Order Medicine for {patientName}</Modal.Title>
+          <Modal.Title>Prescribe Medicine for {patientName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h5> {message && <p>{message}</p>}</h5>
+          <h5>{message && <p>{message}</p>}</h5>
           <Form>
             <Form.Group controlId="formMedicineType">
               <Form.Label>Select Medicine Type:</Form.Label>
@@ -104,19 +116,41 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
               </select>
             </Form.Group>
             {selectedOption === 'general' && (
-              <Form.Group controlId="formMedicineList">
-                <Form.Label>Choose Medicines:</Form.Label>
-                {medsData.map((medicine: Medicine) => (
-                  <Form.Check
-                    key={medicine.id}
-                    type="checkbox"
-                    id={`medicine-${medicine.id}`}
-                    label={medicine.name}
-                    onChange={() => handleMedicineCheckboxChange(medicine)}
-                  />
-                ))}
+              <Form.Group controlId="formSearch">
+                <Form.Label>Search Medicine:</Form.Label>
+                <FormControl
+                  type="text"
+                  placeholder="Enter medicine name"
+                  onChange={handleSearchChange}
+                  value={searchTerm}
+                />
               </Form.Group>
             )}
+            <Row>
+              {selectedOption === 'general' &&
+                filteredMedsData.map((medicine: Medicine) => (
+                  <Col key={medicine.id} sm={6} md={4} lg={3}>
+                    <Card>
+                      <div className="position-relative">
+                        <Form.Check
+                          type="checkbox"
+                          id={`medicine-${medicine.id}`}
+                          className="position-absolute top-0 start-0 mt-2 ms-2"
+                          onChange={() => handleMedicineCheckboxChange(medicine)}
+                        />
+                      </div>
+                      <Card.Img variant="top" src={image} />
+                      <Card.Body>
+                        <Card.Title>{medicine.name}</Card.Title>
+                        <div className="align-price-str">
+                          <div>${medicine.price}</div>
+                          <div>{medicine.strength}</div>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+            </Row>
             {selectedOption === 'compounding' && (
               <Form.Group controlId="formCompoundingDetails">
                 <Form.Label>Enter Compounding Details:</Form.Label>
@@ -135,8 +169,15 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
           <Button variant="secondary" onClick={onHide}>
             Close
           </Button>
-          <Button variant="primary" onClick={handlePlaceOrderClick} disabled={selectedOption === 'general' && selectedMedicines.length === 0 || selectedOption === 'compounding' && compoundingDetails.trim() === ''}>
-            Place Order
+          <Button
+            variant="primary"
+            onClick={handlePlaceOrderClick}
+            disabled={
+              (selectedOption === 'general' && selectedMedicines.length === 0) ||
+              (selectedOption === 'compounding' && compoundingDetails.trim() === '')
+            }
+          >
+            Prescribe
           </Button>
         </Modal.Footer>
       </Modal>
@@ -146,7 +187,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
           <Modal.Title>Success</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Order placed successfully.</p>
+          <p>Prescribed successfully.</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={() => { setSuccessModalShow(false); onHide(); }}>

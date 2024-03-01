@@ -1,0 +1,15 @@
+
+
+ .align-price-str{
+    display:flex ;
+    justify-content: space-between ;
+    font-weight : bold;
+
+ }
+
+ .align-checkbox{
+    display: flex;
+    justify-content: left;
+    padding-top: 3%;
+    padding-left: 3%;
+ }

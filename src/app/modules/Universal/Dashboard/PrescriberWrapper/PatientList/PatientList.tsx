@@ -1,4 +1,3 @@
-// PatientList.tsx
 import React, { useState, useEffect } from 'react';
 import OrderModal from '../Orders/OrderModal/OrderModal';
 import { Button } from 'react-bootstrap';
@@ -26,17 +25,22 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
   const [selectedPatientName, setSelectedPatientName] = useState("");
   const [selectedPatientid, setselectedPatientid] = useState("");
   const [selectedPrescriberId, setselectedPrescriberId] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
 
-
-  const handleOrderClick = (firstName: string , patientID : string  , prescriberID : string) => {
+  const handleOrderClick = (firstName: string, patientID: string, prescriberID: string) => {
     setShowModal(true);
     setSelectedPatientName(firstName);
-    setselectedPatientid(patientID),
-    setselectedPrescriberId(prescriberID)
+    setselectedPatientid(patientID);
+    setselectedPrescriberId(prescriberID);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
   useEffect(() => {
@@ -45,6 +49,7 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
         const response = await fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/getpatientsByPId/${id}`);
         const data = await response.json();
         setPatients(data);
+        setFilteredPatients(data);
       } catch (error) {
         console.error('Error fetching patients:', error);
       }
@@ -53,9 +58,19 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
     fetchPatients();
   }, [id]);
 
+  useEffect(() => {
+    const filtered = patients.filter(patient =>
+      patient.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredPatients(filtered);
+  }, [searchQuery, patients]);
+
   return (
     <div className="container mt-5">
       <h2>Patients</h2>
+      <div className="search-bar mb-4">
+        <input type="text" placeholder="Search by first name" value={searchQuery} onChange={handleSearch} />
+      </div>
       <div className="table-responsive">
         <table className="table table-bordered">
           <thead className="thead-dark">
@@ -72,7 +87,7 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
             </tr>
           </thead>
           <tbody>
-            {patients.map(patient => (
+            {filteredPatients.map(patient => (
               <tr key={patient._id}>
                 <td>{patient.firstName}</td>
                 <td>{patient.lastName}</td>
@@ -83,7 +98,7 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
                 <td>{patient.State}</td>
                 <td>{patient.ZipCode}</td>
                 <td>
-                  <Button variant="primary" onClick={() => handleOrderClick(patient.firstName ,patient._id , id )}>
+                  <Button variant="primary" onClick={() => handleOrderClick(patient.firstName, patient._id, id)}>
                     Prescribe
                   </Button>
                 </td>
@@ -91,7 +106,7 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
             ))}
           </tbody>
         </table>
-        <OrderModal show={showModal} onHide={handleCloseModal} patientName={selectedPatientName} patientID={selectedPatientid}  prescriberID={selectedPrescriberId} />
+        <OrderModal show={showModal} onHide={handleCloseModal} patientName={selectedPatientName} patientID={selectedPatientid} prescriberID={selectedPrescriberId} />
       </div>
     </div>
   );
