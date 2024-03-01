@@ -64,7 +64,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ show, handleClose, id, sele
       };
 
       // Make a POST request to place the order
-      const response = await axios.post('http://localhost:7786/api/prescriber/placeOrder', payload);
+      const response = await axios.post('https://meteor-c535aaff4f8f.herokuapp.com/api/prescriber/placeOrder', payload);
 
       // Show success message if request is successful
       setMessage(response.data.message);
