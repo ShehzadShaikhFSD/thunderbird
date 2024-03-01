@@ -17,9 +17,10 @@ interface Patient {
 
 interface PatientListProps {
   id: string;
+  isVerifiedPrescriber: boolean;
 }
 
-const PatientList: React.FC<PatientListProps> = ({ id }) => {
+const PatientList: React.FC<PatientListProps> = ({ id, isVerifiedPrescriber   }) => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedPatientName, setSelectedPatientName] = useState("");
@@ -98,7 +99,7 @@ const PatientList: React.FC<PatientListProps> = ({ id }) => {
                 <td>{patient.State}</td>
                 <td>{patient.ZipCode}</td>
                 <td>
-                  <Button variant="primary" onClick={() => handleOrderClick(patient.firstName, patient._id, id)}>
+                  <Button disabled={!isVerifiedPrescriber} variant="primary" onClick={() => handleOrderClick(patient.firstName, patient._id, id)}>
                     Prescribe
                   </Button>
                 </td>

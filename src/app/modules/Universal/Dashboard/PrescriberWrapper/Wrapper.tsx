@@ -123,7 +123,7 @@ const Wrapper = () => {
           {/* Content for tab 1 */}
           {activeTab === 0 && (
             <div className="tab-pane fade show active">
-              {id ? <PatientList id={id} /> : <p>No ID provided</p>}
+              {id ? <PatientList id={id} isVerifiedPrescriber={isVerified} /> : <p>No ID provided</p>}
             </div>
           )}
           {/* Content for tab 2 */}
