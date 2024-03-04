@@ -34,7 +34,7 @@ const Lists = () => {
   useEffect(() => {
     if (username === 'admin' && password === 'admin') {
       // Make API call
-      fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers')
+      fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/prescribers')
         .then(response => response.json())
         .then(data => setPrescribers(data))
         .catch(error => console.error('Error fetching data:', error));
@@ -55,7 +55,7 @@ const Lists = () => {
   };
 
   const handleApprove = (id: string) => {
-    fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers/${id}/approve`, {
+    fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/update-is-verified/${id}`, {
       method: 'POST'
     })
       .then(response => {

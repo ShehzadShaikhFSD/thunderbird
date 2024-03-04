@@ -37,7 +37,7 @@ const Prescriber = () => {
     // Add your form submission logic here
     console.log(formData);
     try {
-      const response = await fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers', {
+      const response = await fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/create-prescriber', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
