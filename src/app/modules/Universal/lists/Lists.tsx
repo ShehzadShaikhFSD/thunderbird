@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
@@ -31,28 +31,40 @@ const Lists = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  useEffect(() => {
-    if (username === 'admin' && password === 'admin') {
-      // Make API call
-      fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/prescribers')
-        .then(response => response.json())
-        .then(data => setPrescribers(data))
-        .catch(error => console.error('Error fetching data:', error));
+  const handleLoginClick = () => {
+    fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/admin/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: username,
+          password: password,
+        }),
+      })
+      .then(response => {
+        if (response.ok) {
+          // If login successful, close modal and fetch prescribers data
+          setModalIsOpen(false);
+          fetchPrescribers();
+        } else {
+          throw new Error('Failed to sign in');
+        }
+      })
+      .catch(error => {
+        console.error('Error signing in:', error);
+        alert('Failed to sign in');
+      });
+  }
 
-      // Close the modal after successful login
-      setModalIsOpen(false);
-    }
-  }, [username, password]);
-
-  const handleLogin = () => {
-    if (username === 'admin' && password === 'admin') {
-      // Set state to trigger useEffect and fetch data
-      setUsername('admin');
-      setPassword('admin');
-    } else {
-      alert('Invalid username or password');
-    }
+  const fetchPrescribers = () => {
+    // Make API call to fetch prescribers data
+    fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/prescribers')
+      .then(response => response.json())
+      .then(data => setPrescribers(data))
+      .catch(error => console.error('Error fetching data:', error));
   };
+
 
   const handleApprove = (id: string) => {
     fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/update-is-verified/${id}`, {
@@ -102,7 +114,7 @@ const Lists = () => {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
-          <Button variant="primary" onClick={handleLogin}>
+          <Button variant="primary" onClick={handleLoginClick}>
             Login
           </Button>
         </Modal.Body>
