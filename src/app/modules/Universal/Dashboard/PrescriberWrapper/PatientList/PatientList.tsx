@@ -47,7 +47,7 @@ const PatientList: React.FC<PatientListProps> = ({ id, isVerifiedPrescriber   })
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/getpatientsByPId/${id}`);
+        const response = await fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/v1/patients/getByPrescriber/${id}`);
         const data = await response.json();
         setPatients(data);
         setFilteredPatients(data);

@@ -29,7 +29,7 @@ const Profile: React.FC<ProfileProps> = ({ id }) => {
   useEffect(() => {
     const fetchPrescriberData = async () => {
       try {
-        const response = await fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/prescribers/${id}`);
+        const response = await fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/prescriber/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }

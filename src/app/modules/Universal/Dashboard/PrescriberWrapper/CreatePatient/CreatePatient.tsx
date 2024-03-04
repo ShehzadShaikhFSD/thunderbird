@@ -39,7 +39,7 @@ const CreatePatient: React.FC<CreatePatientProps> = ({ id }) => {
     e.preventDefault();
     try {
       const prescriberId = id;
-      const response = await axios.post('https://meteor-c535aaff4f8f.herokuapp.com/api/patient/create', {
+      const response = await axios.post('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/patients/create', {
         ...formData,
         prescriberId,
       });
