@@ -31,7 +31,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ show, handleClose, id, sele
 
   const fetchPatients = async () => {
     try {
-      const response = await fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/v1/patients/getByPrescriber/${id}`);
+      const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/patients/getByPrescriber/${id}`);
       const data = await response.json();
       setPatients(data);
     } catch (error) {
@@ -64,7 +64,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ show, handleClose, id, sele
       };
 
       // Make a POST request to place the order
-      const response = await axios.post('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/place-order', payload);
+      const response = await axios.post('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/place-order', payload);
 
       // Show success message if request is successful
       setMessage(response.data.message);

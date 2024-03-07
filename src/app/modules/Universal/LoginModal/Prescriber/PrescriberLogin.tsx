@@ -37,7 +37,7 @@ const PrescriberLogin = () => {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/sign-in', {
+      const response = await fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/sign-in', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

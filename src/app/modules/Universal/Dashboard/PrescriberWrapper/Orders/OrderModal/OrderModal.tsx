@@ -78,7 +78,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
       };
 
       // Make a POST request to place the order
-      const response = await axios.post('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/place-order', payload);
+      const response = await axios.post('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/place-order', payload);
 
       // Show success message if request is successful
       setMessage(response.data.message);

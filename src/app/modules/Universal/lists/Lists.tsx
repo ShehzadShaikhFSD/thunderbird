@@ -32,7 +32,7 @@ const Lists = () => {
   const [password, setPassword] = useState<string>('');
 
   const handleLoginClick = () => {
-    fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/admin/signin', {
+    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const Lists = () => {
 
   const fetchPrescribers = () => {
     // Make API call to fetch prescribers data
-    fetch('https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/prescribers')
+    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/prescribers')
       .then(response => response.json())
       .then(data => setPrescribers(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -67,7 +67,7 @@ const Lists = () => {
 
 
   const handleApprove = (id: string) => {
-    fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/update-is-verified/${id}`, {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/update-is-verified/${id}`, {
       method: 'POST'
     })
       .then(response => {

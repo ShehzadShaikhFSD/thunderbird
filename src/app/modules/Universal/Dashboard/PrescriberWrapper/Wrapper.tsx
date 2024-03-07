@@ -48,7 +48,7 @@ const Wrapper = () => {
   useEffect(() => {
     const fetchPrescriberData = async () => {
       try {
-        const response = await fetch(`https://meteor-c535aaff4f8f.herokuapp.com/api/v1/prescribers/prescriber/${id}`);
+        const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/prescriber/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
