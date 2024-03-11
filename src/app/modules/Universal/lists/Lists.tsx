@@ -59,7 +59,7 @@ const Lists = () => {
 
   const fetchPrescribers = () => {
     // Make API call to fetch prescribers data
-    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/prescribers')
+    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescribers')
       .then(response => response.json())
       .then(data => setPrescribers(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -67,7 +67,7 @@ const Lists = () => {
 
 
   const handleApprove = (id: string) => {
-    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/update-is-verified/${id}`, {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-is-verified/${id}`, {
       method: 'POST'
     })
       .then(response => {
