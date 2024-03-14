@@ -19,6 +19,7 @@ import Login from '../modules/Universal/Login/Login'
 import {App} from '../App'
 import Navbar from '../modules/Universal/Header/Navbar/Navbar';
 import Wrapper from '../modules/Universal/Dashboard/PrescriberWrapper/Wrapper'
+import Checkout from '../modules/Universal/checkout/Checkout'
 /**
  * Base URL of the website.
  *
@@ -41,7 +42,7 @@ const AppRoutes: FC = () => {
               <Route path='/Prescriber/Dashboard/:id' element={<Wrapper/>} />
 
               <Route path='/Prescriber/lists' element={<Lists/>} />
-
+<Route path='/Checkout' element={<Checkout/> } />
 
               <Route path='*' element={<Notfound/>} />
               

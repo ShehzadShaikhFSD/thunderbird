@@ -43,6 +43,11 @@ const Navbar = () => {
                 Admin Login
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Checkout">
+               Sample checkout 
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
