@@ -20,6 +20,8 @@ import {App} from '../App'
 import Navbar from '../modules/Universal/Header/Navbar/Navbar';
 import Wrapper from '../modules/Universal/Dashboard/PrescriberWrapper/Wrapper'
 import Checkout from '../modules/Universal/checkout/Checkout'
+import CheckoutFailure from '../modules/Universal/checkout/CheckoutFailure'
+import CheckoutSuccess from '../modules/Universal/checkout/CheckoutSuccess'
 /**
  * Base URL of the website.
  *
@@ -43,6 +45,9 @@ const AppRoutes: FC = () => {
 
               <Route path='/Prescriber/lists' element={<Lists/>} />
 <Route path='/Checkout' element={<Checkout/> } />
+<Route path='/CheckoutFailure' element={<CheckoutFailure/> } />
+<Route path='/CheckoutSuccess' element={<CheckoutSuccess/> } />
+
 
               <Route path='*' element={<Notfound/>} />
               
