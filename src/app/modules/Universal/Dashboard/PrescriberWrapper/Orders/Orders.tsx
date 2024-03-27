@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Orders.css';
+import Cookie from 'universal-cookie';
 
+const cookies = new Cookie();
 interface Order {
   index: number;
   medicineType: string;
@@ -20,12 +22,14 @@ const Orders: React.FC<OrderProps> = ({ id }) => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
+        const token = cookies.get('TOKEN');
         const queryParams = new URLSearchParams({
           prescriberID: id
         });
         const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/orders?${queryParams}`, {
           method: 'GET',
           headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         });

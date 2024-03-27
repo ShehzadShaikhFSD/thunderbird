@@ -7,8 +7,9 @@ import CreatePatient from './CreatePatient/CreatePatient';
 import PatientList from './PatientList/PatientList';
 import Inventory from './Inventory/Inventory';
 import Orders from './Orders/Orders';
+import Cookie from 'universal-cookie';
 
-// 
+const cookies = new Cookie();
 interface PrescriberData {
   _id: string;
   firstName: string; 
@@ -48,10 +49,20 @@ const Wrapper = () => {
   useEffect(() => {
     const fetchPrescriberData = async () => {
       try {
-        const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/prescriber/${id}`);
+        // Retrieve token from cookies
+        const token = cookies.get('TOKEN');
+
+  
+        const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/prescriber/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set Authorization header with token
+          },
+        });
+  
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
+        
         const data: PrescriberData = await response.json();
         setPrescriberData(data);
         console.log(data)
@@ -63,6 +74,7 @@ const Wrapper = () => {
       const timer = setTimeout(() => {
         setShowText(false);
       }, 10000); // 10 seconds
+      return () => clearTimeout(timer); // Clear the timer on component unmount
     };
     fetchPrescriberData();
   }, [id]);

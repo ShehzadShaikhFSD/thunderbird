@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Cookie from 'universal-cookie';
 
+const cookies = new Cookie();
 interface ProfileProps {
   id: string;
 }
@@ -29,7 +31,13 @@ const Profile: React.FC<ProfileProps> = ({ id }) => {
   useEffect(() => {
     const fetchPrescriberData = async () => {
       try {
-        const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/prescriber/${id}`);
+        // const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/prescriber/${id}`);
+        const token = cookies.get('TOKEN');
+        const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/prescriber/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Set Authorization header with token
+          },
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }

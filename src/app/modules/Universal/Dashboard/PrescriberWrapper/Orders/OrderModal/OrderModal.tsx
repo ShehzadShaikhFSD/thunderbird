@@ -4,6 +4,8 @@ import axios from 'axios';
 import medsData from '../../../../../../assets/jsons/meds.json';
 import image from '../../../../../../assets/images/meds.jpeg';
 import './OrderModal.css';
+import Cookie from 'universal-cookie';
+const cookies = new Cookie();
 
 interface Medicine {
   strength: string;
@@ -67,6 +69,9 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
   const handlePlaceOrderClick = async () => {
     setMessage('');
     try {
+       // Retrieve token from cookies
+      const token = cookies.get('TOKEN');
+
       // Create payload object
       const payload = {
         medicineType: selectedOption,
@@ -78,8 +83,11 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
       };
 
       // Make a POST request to place the order
-      const response = await axios.post('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/place-order', payload);
-
+      const response = await axios.post('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/place-order', payload, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Set Authorization header with token
+        },
+      });
       // Show success message if request is successful
       setMessage(response.data.message);
       setSuccessModalShow(true);
