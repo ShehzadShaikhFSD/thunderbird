@@ -148,8 +148,8 @@ const Lists = () => {
                 <th>Medical License State</th>
                 <th>License Number</th>
                 {/* <th>Opt In Physician Search</th> */}
-                <th>Agree To Privacy Policy</th>
-                <th>Accept BAA</th>
+                {/* <th>Agree To Privacy Policy</th>
+                <th>Accept BAA</th> */}
                 <th>Is Verified Prescriber</th>
                 <th>Actions</th> {/* New column for actions */}
               </tr>
@@ -172,8 +172,8 @@ const Lists = () => {
                   <td>{prescriber.medicalLicenseState}</td>
                   <td>{prescriber.licenseNumber}</td>
                   {/* <td>{prescriber.optInPhysicianSearch.toString()}</td> */}
-                  <td>{prescriber.agreeToPrivacyPolicy.toString()}</td>
-                  <td>{prescriber.acceptBAA.toString()}</td>
+                  {/* <td>{prescriber.agreeToPrivacyPolicy.toString()}</td>
+                  <td>{prescriber.acceptBAA.toString()}</td> */}
                   <td>{prescriber.isVerifiedPrescriber.toString()}</td>
                   <td>
                     {!prescriber.isVerifiedPrescriber && (
