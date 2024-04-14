@@ -7,9 +7,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <Link className="navbar-brand" to="/">
+        {/* <Link className="navbar-brand" to="/">
           Optiorx
-        </Link>
+        </Link> */}
         <button
           className="navbar-toggler"
           type="button"
@@ -22,32 +22,32 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          {/* <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link" to="/About">
                 Mission
               </Link>
             </li>
-          </ul>
+          </ul> */}
           <ul className="navbar-nav mb-2 mb-lg-0">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <PrescriberLogin />
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/prescriber/Register">
                Register (Prescriber)
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link className="nav-link" to="/Prescriber/lists">
                 Admin Login
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/Checkout">
                Sample checkout 
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
