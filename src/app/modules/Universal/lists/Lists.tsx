@@ -163,7 +163,7 @@ const Lists = () => {
                   <td>{prescriber.npiNumber}</td>
                   <td>{prescriber.medicalLicenseState}</td>
                   <td>{prescriber.licenseNumber}</td>
-                  <td>{prescriber.optInPhysicianSearch.toString()}</td>
+                  {/* <td>{prescriber.optInPhysicianSearch.toString()}</td> */}
                   <td>{prescriber.agreeToPrivacyPolicy.toString()}</td>
                   <td>{prescriber.acceptBAA.toString()}</td>
                   <td>{prescriber.isVerifiedPrescriber.toString()}</td>
