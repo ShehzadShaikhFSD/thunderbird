@@ -66,33 +66,41 @@ const Lists = () => {
   };
 
 
-  const handleApprove = (id: string) => {
-    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-is-verified/${id}`, {
-      method: 'POST'
+  const handleVerificationStatus = (id: string, status: boolean) => {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-verification-status/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ status })
     })
-      .then(response => {
-        if (response.ok) {
-          // If the API call is successful, update the prescriber list to reflect the change
-          setPrescribers(prevPrescribers =>
-            prevPrescribers.map(prescriber => {
-              if (prescriber._id === id) {
-                return { ...prescriber, isVerifiedPrescriber: true };
-              }
-              return prescriber;
-            })
-          );
-          // Show a modal indicating approval
+    .then(response => {
+      if (response.ok) {
+        // If the API call is successful, update the prescriber list to reflect the change
+        setPrescribers(prevPrescribers =>
+          prevPrescribers.map(prescriber => {
+            if (prescriber._id === id) {
+              return { ...prescriber, isVerifiedPrescriber: status };
+            }
+            return prescriber;
+          })
+        );
+        // Show a modal indicating approval or rejection
+        if (status) {
           alert('Prescriber approved');
         } else {
-          throw new Error('Failed to approve prescriber');
+          alert('Prescriber rejected');
         }
-      })
-      .catch(error => {
-        console.error('Error approving prescriber:', error);
-        alert('Error approving prescriber');
-      });
+      } else {
+        throw new Error('Failed to update prescriber status');
+      }
+    })
+    .catch(error => {
+      console.error('Error updating prescriber status:', error);
+      alert('Error updating prescriber status');
+    });
   };
-
+  
   return (
     <div className="container mt-8">
       <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)} >
@@ -139,7 +147,7 @@ const Lists = () => {
                 <th>NPI Number</th>
                 <th>Medical License State</th>
                 <th>License Number</th>
-                <th>Opt In Physician Search</th>
+                {/* <th>Opt In Physician Search</th> */}
                 <th>Agree To Privacy Policy</th>
                 <th>Accept BAA</th>
                 <th>Is Verified Prescriber</th>
@@ -168,11 +176,13 @@ const Lists = () => {
                   <td>{prescriber.acceptBAA.toString()}</td>
                   <td>{prescriber.isVerifiedPrescriber.toString()}</td>
                   <td>
-                    {/* Button to approve the prescriber */}
                     {!prescriber.isVerifiedPrescriber && (
-                      <Button onClick={() => handleApprove(prescriber._id)}>Approve Prescriber</Button>
+                      <Button onClick={() => handleVerificationStatus(prescriber._id, true)}>Approve Prescriber</Button>
                     )}
-                    {prescriber.isVerifiedPrescriber && <span>Verified</span>}
+                    {prescriber.isVerifiedPrescriber &&
+                    //  <span>Verified</span>
+                     <Button onClick={() => handleVerificationStatus(prescriber._id, false)}>Reject / Disable Prescriber</Button>
+                     }
                   </td>
                 </tr>
               ))}
