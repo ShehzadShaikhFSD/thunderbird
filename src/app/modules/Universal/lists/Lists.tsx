@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-
+import './Lists.css'
 interface Prescriber {
   _id: string;
   firstName: string;
@@ -26,7 +26,9 @@ interface Prescriber {
   optedForBussinessV1: boolean;
   optedForBussinessV2: boolean;
   optedForBussinessV3: boolean;
-  optedForBussinessV4: boolean;
+  bussinessV1Enabled: boolean;
+  bussinessV2Enabled: boolean;
+  bussinessV3Enabled: boolean;
 }
 
 const Lists = () => {
@@ -99,6 +101,34 @@ const Lists = () => {
         alert('Error updating prescriber status');
       });
   };
+  const handleBusinessStatus = (id: string, status: boolean, vertical: string) => {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-business-verification-status/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ status, verticalToBeEnabled: vertical })
+    })
+      .then(response => {
+        if (response.ok) {
+          setPrescribers(prevPrescribers =>
+            prevPrescribers.map(prescriber => {
+              if (prescriber._id === id) {
+                return { ...prescriber, [vertical]: status };
+              }
+              return prescriber;
+            })
+          );
+          alert(`Prescriber ${status ? 'enabled' : 'disabled'} for ${vertical}`);
+        } else {
+          throw new Error('Failed to update business status');
+        }
+      })
+      .catch(error => {
+        console.error('Error updating business status:', error);
+        alert('Error updating business status');
+      });
+  };
 
   return (
     <div className="container mt-8">
@@ -149,7 +179,12 @@ const Lists = () => {
                 <th>Opted for Bussiness V1</th>
                 <th>Opted for Bussiness V2</th>
                 <th>Opted for Bussiness V3</th>
-                <th>Opted for Bussiness V4</th>
+                <th>Bussiness V1 Enabled</th>
+                <th>Actions for Bussiness V1</th>
+                <th>Bussiness V2 Enabled</th>
+                <th>Actions for Bussiness V2</th>
+                <th>Bussiness V3 Enabled</th>
+                <th>Actions for Bussiness V3</th>
                 <th>Is Verified Prescriber</th>
                 <th>Actions</th>
               </tr>
@@ -171,13 +206,47 @@ const Lists = () => {
                   <td>{prescriber?.npiNumber ?? ''}</td>
                   <td>{prescriber?.medicalLicenseState ?? ''}</td>
                   <td>{prescriber?.licenseNumber ?? ''}</td>
+                  {/*  */}
                   <td>{prescriber?.optedForBussinessV1?.toString() ?? ''}</td>
                   <td>{prescriber?.optedForBussinessV2?.toString() ?? ''}</td>
                   <td>{prescriber?.optedForBussinessV3?.toString() ?? ''}</td>
-                  <td>{prescriber?.optedForBussinessV4?.toString() ?? ''}</td>
+                  {/*  */}
+                  <td>{prescriber?.bussinessV1Enabled?.toString() ?? ''}</td>
+                  <td>
+                    <div>
+                      <Button className='btn-enhancement' onClick={() => handleBusinessStatus(prescriber._id, true, 'bussinessV1Enabled')}>
+                        Enable V1
+                      </Button>
+                      <Button className='btn-enhancement' onClick={() => handleBusinessStatus(prescriber._id, false, 'bussinessV1Enabled')}>
+                        Disable V1
+                      </Button>
+                    </div>
+                  </td>
+                  <td>{prescriber?.bussinessV2Enabled?.toString() ?? ''}</td>
+                  <td>
+                  <div>
+                      <Button className='btn-enhancement' onClick={() => handleBusinessStatus(prescriber._id, true, 'bussinessV2Enabled')}>
+                        Enable V2
+                      </Button>
+                      <Button className='btn-enhancement' onClick={() => handleBusinessStatus(prescriber._id, false, 'bussinessV2Enabled')}>
+                        Disable V2
+                      </Button>
+                    </div>
+                  </td>
+                  <td>{prescriber?.bussinessV3Enabled?.toString() ?? ''}</td>
+                  <td>
+                  <div>
+                      <Button className='btn-enhancement' onClick={() => handleBusinessStatus(prescriber._id, true, 'bussinessV3Enabled')}>
+                        Enable V3
+                      </Button>
+                      <Button className='btn-enhancement' onClick={() => handleBusinessStatus(prescriber._id, false, 'bussinessV3Enabled')}>
+                        Disable V3
+                      </Button>
+                  </div>
+                  </td>
                   <td>{prescriber?.isVerifiedPrescriber?.toString() ?? ''}</td>
                   <td>
-                    {!prescriber.isVerifiedPrescriber && (
+                    {/* {!prescriber.isVerifiedPrescriber && (
                       <Button onClick={() => handleVerificationStatus(prescriber._id, true)}>
                         Approve Prescriber
                       </Button>
@@ -186,7 +255,14 @@ const Lists = () => {
                       <Button onClick={() => handleVerificationStatus(prescriber._id, false)}>
                         Reject / Disable Prescriber
                       </Button>
-                    )}
+                    )} */}
+                      <Button className='btn-enhancement' onClick={() => handleVerificationStatus(prescriber._id, true)}>
+                        Approve Prescriber
+                      </Button>
+                      <Button className='btn-enhancement' onClick={() => handleVerificationStatus(prescriber._id, false)}>
+                        Reject / Disable Prescriber
+                      </Button>
+                    
                   </td>
                 </tr>
               ))}
