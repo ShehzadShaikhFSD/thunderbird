@@ -68,7 +68,7 @@ const Lists = () => {
   };
 
   const handleVerificationStatus = (id: string, status: boolean) => {
-    fetch(`http://localhost:7786/api/v1/admin/update-verification-status/${id}`, {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-verification-status/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
