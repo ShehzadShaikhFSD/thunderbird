@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
@@ -23,6 +23,10 @@ interface Prescriber {
   agreeToPrivacyPolicy: boolean;
   acceptBAA: boolean;
   isVerifiedPrescriber: boolean;
+  optedForBussinessV1: boolean;
+  optedForBussinessV2: boolean;
+  optedForBussinessV3: boolean;
+  optedForBussinessV4: boolean;
 }
 
 const Lists = () => {
@@ -33,18 +37,17 @@ const Lists = () => {
 
   const handleLoginClick = () => {
     fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: username,
-          password: password,
-        }),
-      })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: "admin",
+        password: "admin",
+      }),
+    })
       .then(response => {
         if (response.ok) {
-          // If login successful, close modal and fetch prescribers data
           setModalIsOpen(false);
           fetchPrescribers();
         } else {
@@ -55,55 +58,51 @@ const Lists = () => {
         console.error('Error signing in:', error);
         alert('Failed to sign in');
       });
-  }
+  };
 
   const fetchPrescribers = () => {
-    // Make API call to fetch prescribers data
     fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescribers')
       .then(response => response.json())
       .then(data => setPrescribers(data))
       .catch(error => console.error('Error fetching data:', error));
   };
 
-
   const handleVerificationStatus = (id: string, status: boolean) => {
-    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-verification-status/${id}`, {
+    fetch(`http://localhost:7786/api/v1/admin/update-verification-status/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ status })
     })
-    .then(response => {
-      if (response.ok) {
-        // If the API call is successful, update the prescriber list to reflect the change
-        setPrescribers(prevPrescribers =>
-          prevPrescribers.map(prescriber => {
-            if (prescriber._id === id) {
-              return { ...prescriber, isVerifiedPrescriber: status };
-            }
-            return prescriber;
-          })
-        );
-        // Show a modal indicating approval or rejection
-        if (status) {
-          alert('Prescriber approved');
+      .then(response => {
+        if (response.ok) {
+          setPrescribers(prevPrescribers =>
+            prevPrescribers.map(prescriber => {
+              if (prescriber._id === id) {
+                return { ...prescriber, isVerifiedPrescriber: status };
+              }
+              return prescriber;
+            })
+          );
+          if (status) {
+            alert('Prescriber approved');
+          } else {
+            alert('Prescriber rejected');
+          }
         } else {
-          alert('Prescriber rejected');
+          throw new Error('Failed to update prescriber status');
         }
-      } else {
-        throw new Error('Failed to update prescriber status');
-      }
-    })
-    .catch(error => {
-      console.error('Error updating prescriber status:', error);
-      alert('Error updating prescriber status');
-    });
+      })
+      .catch(error => {
+        console.error('Error updating prescriber status:', error);
+        alert('Error updating prescriber status');
+      });
   };
-  
+
   return (
     <div className="container mt-8">
-      <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)} >
+      <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Admin Login</Modal.Title>
         </Modal.Header>
@@ -129,7 +128,7 @@ const Lists = () => {
       </Modal>
       {prescribers.length > 0 && (
         <div className="table-responsive">
-      <h1 className="text-center mt-5 mb-4">All Prescribers</h1>
+          <h1 className="text-center mt-5 mb-4">All Prescribers</h1>
           <table className="table table-bordered table-hover">
             <thead className="thead-dark">
               <tr>
@@ -147,42 +146,47 @@ const Lists = () => {
                 <th>NPI Number</th>
                 <th>Medical License State</th>
                 <th>License Number</th>
-                {/* <th>Opt In Physician Search</th> */}
-                {/* <th>Agree To Privacy Policy</th>
-                <th>Accept BAA</th> */}
+                <th>Opted for Bussiness V1</th>
+                <th>Opted for Bussiness V2</th>
+                <th>Opted for Bussiness V3</th>
+                <th>Opted for Bussiness V4</th>
                 <th>Is Verified Prescriber</th>
-                <th>Actions</th> {/* New column for actions */}
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {prescribers.map(prescriber => (
                 <tr key={prescriber?._id}>
-                  <td>{prescriber.firstName}</td>
-                  <td>{prescriber.lastName}</td>
-                  <td>{prescriber.email}</td>
-                  <td>{prescriber.phoneNumber}</td>
-                  <td>{prescriber.credentials}</td>
-                  <td>{prescriber.practiceName}</td>
-                  <td>{prescriber.practiceAddressLine1}</td>
-                  <td>{prescriber.practiceAddressLine2}</td>
-                  <td>{prescriber.practiceCity}</td>
-                  <td>{prescriber.practiceState}</td>
-                  <td>{prescriber.practiceZipCode}</td>
-                  <td>{prescriber.npiNumber}</td>
-                  <td>{prescriber.medicalLicenseState}</td>
-                  <td>{prescriber.licenseNumber}</td>
-                  {/* <td>{prescriber.optInPhysicianSearch.toString()}</td> */}
-                  {/* <td>{prescriber.agreeToPrivacyPolicy.toString()}</td>
-                  <td>{prescriber.acceptBAA.toString()}</td> */}
-                  <td>{prescriber.isVerifiedPrescriber.toString()}</td>
+                  <td>{prescriber?.firstName ?? ''}</td>
+                  <td>{prescriber?.lastName ?? ''}</td>
+                  <td>{prescriber?.email ?? ''}</td>
+                  <td>{prescriber?.phoneNumber ?? ''}</td>
+                  <td>{prescriber?.credentials ?? ''}</td>
+                  <td>{prescriber?.practiceName ?? ''}</td>
+                  <td>{prescriber?.practiceAddressLine1 ?? ''}</td>
+                  <td>{prescriber?.practiceAddressLine2 ?? ''}</td>
+                  <td>{prescriber?.practiceCity ?? ''}</td>
+                  <td>{prescriber?.practiceState ?? ''}</td>
+                  <td>{prescriber?.practiceZipCode ?? ''}</td>
+                  <td>{prescriber?.npiNumber ?? ''}</td>
+                  <td>{prescriber?.medicalLicenseState ?? ''}</td>
+                  <td>{prescriber?.licenseNumber ?? ''}</td>
+                  <td>{prescriber?.optedForBussinessV1?.toString() ?? ''}</td>
+                  <td>{prescriber?.optedForBussinessV2?.toString() ?? ''}</td>
+                  <td>{prescriber?.optedForBussinessV3?.toString() ?? ''}</td>
+                  <td>{prescriber?.optedForBussinessV4?.toString() ?? ''}</td>
+                  <td>{prescriber?.isVerifiedPrescriber?.toString() ?? ''}</td>
                   <td>
                     {!prescriber.isVerifiedPrescriber && (
-                      <Button onClick={() => handleVerificationStatus(prescriber._id, true)}>Approve Prescriber</Button>
+                      <Button onClick={() => handleVerificationStatus(prescriber._id, true)}>
+                        Approve Prescriber
+                      </Button>
                     )}
-                    {prescriber.isVerifiedPrescriber &&
-                    //  <span>Verified</span>
-                     <Button onClick={() => handleVerificationStatus(prescriber._id, false)}>Reject / Disable Prescriber</Button>
-                     }
+                    {prescriber.isVerifiedPrescriber && (
+                      <Button onClick={() => handleVerificationStatus(prescriber._id, false)}>
+                        Reject / Disable Prescriber
+                      </Button>
+                    )}
                   </td>
                 </tr>
               ))}
