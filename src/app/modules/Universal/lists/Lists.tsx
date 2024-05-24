@@ -37,10 +37,11 @@ const Lists = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [activeTab, setActiveTab] = useState<number>(0);
+  const [disableButtons , setdisableButtons ] = useState<boolean>(true);
   
 
   const handleLoginClick = () => {
-    fetch('http://localhost:7786/api/v1/admin/signin', {
+    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -53,6 +54,7 @@ const Lists = () => {
       .then(response => {
         if (response.ok) {
           setModalIsOpen(false);
+          // setdisableButtons(false);
           fetchPrescribers();
         } else {
           throw new Error('Failed to sign in');
@@ -65,14 +67,14 @@ const Lists = () => {
   };
 
   const fetchPrescribers = () => {
-    fetch('http://localhost:7786/api/v1/admin/prescribers')
+    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescribers')
       .then(response => response.json())
       .then(data => setPrescribers(data))
       .catch(error => console.error('Error fetching data:', error));
   };
 
   const handleVerificationStatus = (id: string, status: boolean) => {
-    fetch(`http://localhost:7786/api/v1/admin/update-verification-status/${id}`, {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-verification-status/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -101,7 +103,7 @@ const Lists = () => {
   };
 
   const handleBusinessStatus = (id: string, status: boolean, vertical: string) => {
-    fetch(`http://localhost:7786/api/v1/admin/update-business-verification-status/${id}`, {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-business-verification-status/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -173,6 +175,7 @@ const Lists = () => {
         </div>
         <div className="container mt-8">
           <ul className="nav nav-tabs">
+            {disableButtons}
             <li className="nav-item">
               <button
                 className={`nav-link ${activeTab === 0 ? 'active' : ''}`}
