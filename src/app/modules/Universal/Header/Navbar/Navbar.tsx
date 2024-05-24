@@ -7,9 +7,6 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        {/* <Link className="navbar-brand" to="/">
-         DDS
-        </Link> */}
         <a href='/' >DDS Admin Login</a>
 
         <button

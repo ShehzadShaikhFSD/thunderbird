@@ -33,7 +33,7 @@ const AppRoutes: FC = () => {
   const {currentUser} = useAuth()
   return (
     <BrowserRouter basename={BASE_URL}>
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route element={<App />}>
           
