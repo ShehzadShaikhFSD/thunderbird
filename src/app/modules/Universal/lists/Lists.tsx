@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import './Lists.css';
-
+import Prescriptions from '../Prescriptions';
 interface Prescriber {
   _id: string;
   firstName: string;
@@ -37,6 +37,7 @@ const Lists = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [activeTab, setActiveTab] = useState<number>(0);
+  
 
   const handleLoginClick = () => {
     fetch('http://localhost:7786/api/v1/admin/signin', {
@@ -45,8 +46,8 @@ const Lists = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: "admin",
-        password: "admin",
+        email: username,
+        password: password,
       }),
     })
       .then(response => {
@@ -132,6 +133,10 @@ const Lists = () => {
     setActiveTab(tabIndex);
   };
 
+  const handleLogoutClick = () => {
+    setModalIsOpen(true);
+  };
+
   return (
     <div>
       <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)}>
@@ -160,6 +165,12 @@ const Lists = () => {
       </Modal>
 
       {!modalIsOpen && (
+        <div  >
+        <div className='logout-parent' >
+          <Button variant="danger" onClick={handleLogoutClick}>
+              Logout
+            </Button>
+        </div>
         <div className="container mt-8">
           <ul className="nav nav-tabs">
             <li className="nav-item">
@@ -167,7 +178,7 @@ const Lists = () => {
                 className={`nav-link ${activeTab === 0 ? 'active' : ''}`}
                 onClick={() => handleTabChange(0)}
               >
-                Prescriber List
+                Prescribers
               </button>
             </li>
             <li className="nav-item">
@@ -175,7 +186,7 @@ const Lists = () => {
                 className={`nav-link ${activeTab === 1 ? 'active' : ''}`}
                 onClick={() => handleTabChange(1)}
               >
-                Static Content
+                Prescriptions
               </button>
             </li>
           </ul>
@@ -281,11 +292,11 @@ const Lists = () => {
             )}
             {activeTab === 1 && (
               <div className="tab-pane fade show active">
-                <h2>Prescriptions</h2>
-                <p>This is some static content.</p>
+                <Prescriptions/>
               </div>
             )}
           </div>
+        </div>
         </div>
       )}
     </div>

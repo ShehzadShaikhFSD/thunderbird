@@ -4,3 +4,9 @@
     border: 2px solid black !important;
   }
   
+  .logout-parent{
+    display: flex;
+    justify-content: end;
+    margin-top: 50px;
+    margin-right: 100px;
+  }
