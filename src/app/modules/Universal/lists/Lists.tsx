@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import './Lists.css';
 import Prescriptions from '../Prescriptions';
+
 interface Prescriber {
   _id: string;
   firstName: string;
@@ -37,8 +38,8 @@ const Lists = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [disableButtons , setdisableButtons ] = useState<boolean>(true);
-  
+  const [disableButtons, setDisableButtons] = useState<boolean>(true);
+  const [token, setToken] = useState<string | null>(null);
 
   const handleLoginClick = () => {
     fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/signin', {
@@ -51,11 +52,13 @@ const Lists = () => {
         password: password,
       }),
     })
-      .then(response => {
-        if (response.ok) {
+      .then(response => response.json())
+      .then(data => {
+        if (data.token) {
+          setToken(data.token);
           setModalIsOpen(false);
-          // setdisableButtons(false);
-          fetchPrescribers();
+          setDisableButtons(false);
+          fetchPrescribers(data.token);
         } else {
           throw new Error('Failed to sign in');
         }
@@ -66,8 +69,12 @@ const Lists = () => {
       });
   };
 
-  const fetchPrescribers = () => {
-    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescribers')
+  const fetchPrescribers = (token: string) => {
+    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescribers', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
       .then(response => response.json())
       .then(data => setPrescribers(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -77,9 +84,10 @@ const Lists = () => {
     fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-verification-status/${id}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({ status })
+      body: JSON.stringify({ status }),
     })
       .then(response => {
         if (response.ok) {
@@ -106,9 +114,10 @@ const Lists = () => {
     fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-business-verification-status/${id}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({ status, verticalToBeEnabled: vertical })
+      body: JSON.stringify({ status, verticalToBeEnabled: vertical }),
     })
       .then(response => {
         if (response.ok) {
@@ -136,12 +145,17 @@ const Lists = () => {
   };
 
   const handleLogoutClick = () => {
+    setToken(null);
+    setDisableButtons(true);
     setModalIsOpen(true);
+    setActiveTab(0);
+    setUsername('');
+    setPassword('');
   };
 
   return (
     <div>
-      <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)}>
+      <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)} backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title>Admin Login</Modal.Title>
         </Modal.Header>
@@ -167,139 +181,139 @@ const Lists = () => {
       </Modal>
 
       {!modalIsOpen && (
-        <div  >
-        <div className='logout-parent' >
-          <Button variant="danger" onClick={handleLogoutClick}>
+        <div>
+          <div className='logout-parent'>
+            <Button variant="danger" onClick={handleLogoutClick}>
               Logout
             </Button>
-        </div>
-        <div className="container mt-8">
-          <ul className="nav nav-tabs">
-            {disableButtons}
-            <li className="nav-item">
-              <button
-                className={`nav-link ${activeTab === 0 ? 'active' : ''}`}
-                onClick={() => handleTabChange(0)}
-              >
-                Prescribers
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`nav-link ${activeTab === 1 ? 'active' : ''}`}
-                onClick={() => handleTabChange(1)}
-              >
-                Prescriptions
-              </button>
-            </li>
-          </ul>
-          <div className="tab-content mt-4">
-            {activeTab === 0 && (
-              <div className="tab-pane fade show active">
-                {prescribers.length > 0 && (
-                  <div className="table-responsive">
-                    <h1 className="text-center mt-5 mb-4">All Prescribers</h1>
-                    <table className="table table-bordered table-hover">
-                      <thead className="thead-dark">
-                        <tr>
-                          <th>First Name</th>
-                          <th>Last Name</th>
-                          <th>Email</th>
-                          <th>Phone Number</th>
-                          <th>Credentials</th>
-                          <th>Practice Name</th>
-                          <th>Practice Address Line 1</th>
-                          <th>Practice Address Line 2</th>
-                          <th>Practice City</th>
-                          <th>Practice State</th>
-                          <th>Practice Zip Code</th>
-                          <th>NPI Number</th>
-                          <th>Medical License State</th>
-                          <th>License Number</th>
-                          <th>Opted for Bussiness V1</th>
-                          <th>Opted for Bussiness V2</th>
-                          <th>Opted for Bussiness V3</th>
-                          <th>Bussiness V1 Enabled</th>
-                          <th>Actions for Bussiness V1</th>
-                          <th>Bussiness V2 Enabled</th>
-                          <th>Actions for Bussiness V2</th>
-                          <th>Bussiness V3 Enabled</th>
-                          <th>Actions for Bussiness V3</th>
-                          <th>Is Verified Prescriber</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {prescribers.map(prescriber => (
-                          <tr key={prescriber?._id}>
-                            <td>{prescriber?.firstName ?? ''}</td>
-                            <td>{prescriber?.lastName ?? ''}</td>
-                            <td>{prescriber?.email ?? ''}</td>
-                            <td>{prescriber?.phoneNumber ?? ''}</td>
-                            <td>{prescriber?.credentials ?? ''}</td>
-                            <td>{prescriber?.practiceName ?? ''}</td>
-                            <td>{prescriber?.practiceAddressLine1 ?? ''}</td>
-                            <td>{prescriber?.practiceAddressLine2 ?? ''}</td>
-                            <td>{prescriber?.practiceCity ?? ''}</td>
-                            <td>{prescriber?.practiceState ?? ''}</td>
-                            <td>{prescriber?.practiceZipCode ?? ''}</td>
-                            <td>{prescriber?.npiNumber ?? ''}</td>
-                            <td>{prescriber?.medicalLicenseState ?? ''}</td>
-                            <td>{prescriber?.licenseNumber ?? ''}</td>
-                            <td>{prescriber?.optedForBussinessV1?.toString() ?? ''}</td>
-                            <td>{prescriber?.optedForBussinessV2?.toString() ?? ''}</td>
-                            <td>{prescriber?.optedForBussinessV3?.toString() ?? ''}</td>
-                            <td>{prescriber?.bussinessV1Enabled?.toString() ?? ''}</td>
-                            <td>
-                              <button
-                                className={`btn btn-${prescriber?.bussinessV1Enabled ? 'danger' : 'success'}`}
-                                onClick={() => handleBusinessStatus(prescriber?._id, !prescriber?.bussinessV1Enabled, 'bussinessV1Enabled')}
-                              >
-                                {prescriber?.bussinessV1Enabled ? 'Disable' : 'Enable'}
-                              </button>
-                            </td>
-                            <td>{prescriber?.bussinessV2Enabled?.toString() ?? ''}</td>
-                            <td>
-                              <button
-                                className={`btn btn-${prescriber?.bussinessV2Enabled ? 'danger' : 'success'}`}
-                                onClick={() => handleBusinessStatus(prescriber?._id, !prescriber?.bussinessV2Enabled, 'bussinessV2Enabled')}
-                              >
-                                {prescriber?.bussinessV2Enabled ? 'Disable' : 'Enable'}
-                              </button>
-                            </td>
-                            <td>{prescriber?.bussinessV3Enabled?.toString() ?? ''}</td>
-                            <td>
-                              <button
-                                className={`btn btn-${prescriber?.bussinessV3Enabled ? 'danger' : 'success'}`}
-                                onClick={() => handleBusinessStatus(prescriber?._id, !prescriber?.bussinessV3Enabled, 'bussinessV3Enabled')}
-                              >
-                                {prescriber?.bussinessV3Enabled ? 'Disable' : 'Enable'}
-                              </button>
-                            </td>
-                            <td>{prescriber?.isVerifiedPrescriber?.toString() ?? ''}</td>
-                            <td>
-                              <button
-                                className={`btn btn-${prescriber?.isVerifiedPrescriber ? 'danger' : 'success'}`}
-                                onClick={() => handleVerificationStatus(prescriber?._id, !prescriber?.isVerifiedPrescriber)}
-                              >
-                                {prescriber?.isVerifiedPrescriber ? 'Reject / Disable Account' : 'Approve'}
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
-            )}
-            {activeTab === 1 && (
-              <div className="tab-pane fade show active">
-                <Prescriptions/>
-              </div>
-            )}
           </div>
-        </div>
+          <div className="container mt-8">
+            <ul className="nav nav-tabs">
+              <li className="nav-item">
+                <button
+                  className={`nav-link ${activeTab === 0 ? 'active' : ''}`}
+                  onClick={() => handleTabChange(0)}
+                >
+                  Prescribers
+                </button>
+              </li>
+              <li className="nav-item">
+                <button
+                  className={`nav-link ${activeTab === 1 ? 'active' : ''}`}
+                  onClick={() => handleTabChange(1)}
+                  disabled={disableButtons}
+                >
+                  Prescriptions
+                </button>
+              </li>
+            </ul>
+            <div className="tab-content mt-4">
+              {activeTab === 0 && (
+                <div className="tab-pane fade show active">
+                  {prescribers.length > 0 && (
+                    <div className="table-responsive">
+                      <h1 className="text-center mt-5 mb-4">All Prescribers</h1>
+                      <table className="table table-bordered table-hover">
+                        <thead className="thead-dark">
+                          <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Credentials</th>
+                            <th>Practice Name</th>
+                            <th>Practice Address Line 1</th>
+                            <th>Practice Address Line 2</th>
+                            <th>Practice City</th>
+                            <th>Practice State</th>
+                            <th>Practice Zip Code</th>
+                            <th>NPI Number</th>
+                            <th>Medical License State</th>
+                            <th>License Number</th>
+                            <th>Opted for Bussiness V1</th>
+                            <th>Opted for Bussiness V2</th>
+                            <th>Opted for Bussiness V3</th>
+                            <th>Bussiness V1 Enabled</th>
+                            <th>Actions for Bussiness V1</th>
+                            <th>Bussiness V2 Enabled</th>
+                            <th>Actions for Bussiness V2</th>
+                            <th>Bussiness V3 Enabled</th>
+                            <th>Actions for Bussiness V3</th>
+                            <th>Is Verified Prescriber</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {prescribers.map(prescriber => (
+                            <tr key={prescriber?._id}>
+                              <td>{prescriber?.firstName ?? ''}</td>
+                              <td>{prescriber?.lastName ?? ''}</td>
+                              <td>{prescriber?.email ?? ''}</td>
+                              <td>{prescriber?.phoneNumber ?? ''}</td>
+                              <td>{prescriber?.credentials ?? ''}</td>
+                              <td>{prescriber?.practiceName ?? ''}</td>
+                              <td>{prescriber?.practiceAddressLine1 ?? ''}</td>
+                              <td>{prescriber?.practiceAddressLine2 ?? ''}</td>
+                              <td>{prescriber?.practiceCity ?? ''}</td>
+                              <td>{prescriber?.practiceState ?? ''}</td>
+                              <td>{prescriber?.practiceZipCode ?? ''}</td>
+                              <td>{prescriber?.npiNumber ?? ''}</td>
+                              <td>{prescriber?.medicalLicenseState ?? ''}</td>
+                              <td>{prescriber?.licenseNumber ?? ''}</td>
+                              <td>{prescriber?.optedForBussinessV1?.toString() ?? ''}</td>
+                              <td>{prescriber?.optedForBussinessV2?.toString() ?? ''}</td>
+                              <td>{prescriber?.optedForBussinessV3?.toString() ?? ''}</td>
+                              <td>{prescriber?.bussinessV1Enabled?.toString() ?? ''}</td>
+                              <td>
+                                <button
+                                  className={`btn btn-${prescriber?.bussinessV1Enabled ? 'danger' : 'success'}`}
+                                  onClick={() => handleBusinessStatus(prescriber?._id, !prescriber?.bussinessV1Enabled, 'bussinessV1Enabled')}
+                                >
+                                  {prescriber?.bussinessV1Enabled ? 'Disable' : 'Enable'}
+                                </button>
+                              </td>
+                              <td>{prescriber?.bussinessV2Enabled?.toString() ?? ''}</td>
+                              <td>
+                                <button
+                                  className={`btn btn-${prescriber?.bussinessV2Enabled ? 'danger' : 'success'}`}
+                                  onClick={() => handleBusinessStatus(prescriber?._id, !prescriber?.bussinessV2Enabled, 'bussinessV2Enabled')}
+                                >
+                                  {prescriber?.bussinessV2Enabled ? 'Disable' : 'Enable'}
+                                </button>
+                              </td>
+                              <td>{prescriber?.bussinessV3Enabled?.toString() ?? ''}</td>
+                              <td>
+                                <button
+                                  className={`btn btn-${prescriber?.bussinessV3Enabled ? 'danger' : 'success'}`}
+                                  onClick={() => handleBusinessStatus(prescriber?._id, !prescriber?.bussinessV3Enabled, 'bussinessV3Enabled')}
+                                >
+                                  {prescriber?.bussinessV3Enabled ? 'Disable' : 'Enable'}
+                                </button>
+                              </td>
+                              <td>{prescriber?.isVerifiedPrescriber?.toString() ?? ''}</td>
+                              <td>
+                                <button
+                                  className={`btn btn-${prescriber?.isVerifiedPrescriber ? 'danger' : 'success'}`}
+                                  onClick={() => handleVerificationStatus(prescriber?._id, !prescriber?.isVerifiedPrescriber)}
+                                >
+                                  {prescriber?.isVerifiedPrescriber ? 'Reject / Disable Account' : 'Approve'}
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+              {activeTab === 1 && (
+                <div className="tab-pane fade show active">
+                  <Prescriptions />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>
