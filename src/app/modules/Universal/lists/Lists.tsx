@@ -153,17 +153,25 @@ const Lists = () => {
     setPassword('');
   };
 
+  useEffect(() => {
+    if (token) {
+      fetchPrescribers(token);
+    }
+  }, [token]);
+
+  const isLoginButtonDisabled = !username || !password;
+
   return (
     <div>
       <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)} backdrop="static">
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Admin Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <input
-            type="text"
+            type="email"
             className="form-control mb-3"
-            placeholder="Username"
+            placeholder="Email"
             value={username}
             onChange={e => setUsername(e.target.value)}
           />
@@ -174,7 +182,7 @@ const Lists = () => {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
-          <Button variant="primary" onClick={handleLoginClick}>
+          <Button variant="primary" onClick={handleLoginClick} disabled={isLoginButtonDisabled}>
             Login
           </Button>
         </Modal.Body>
@@ -245,58 +253,58 @@ const Lists = () => {
                         </thead>
                         <tbody>
                           {prescribers.map(prescriber => (
-                            <tr key={prescriber?._id}>
-                              <td>{prescriber?.firstName ?? ''}</td>
-                              <td>{prescriber?.lastName ?? ''}</td>
-                              <td>{prescriber?.email ?? ''}</td>
-                              <td>{prescriber?.phoneNumber ?? ''}</td>
-                              <td>{prescriber?.credentials ?? ''}</td>
-                              <td>{prescriber?.practiceName ?? ''}</td>
-                              <td>{prescriber?.practiceAddressLine1 ?? ''}</td>
-                              <td>{prescriber?.practiceAddressLine2 ?? ''}</td>
-                              <td>{prescriber?.practiceCity ?? ''}</td>
-                              <td>{prescriber?.practiceState ?? ''}</td>
-                              <td>{prescriber?.practiceZipCode ?? ''}</td>
-                              <td>{prescriber?.npiNumber ?? ''}</td>
-                              <td>{prescriber?.medicalLicenseState ?? ''}</td>
-                              <td>{prescriber?.licenseNumber ?? ''}</td>
-                              <td>{prescriber?.optedForBussinessV1?.toString() ?? ''}</td>
-                              <td>{prescriber?.optedForBussinessV2?.toString() ?? ''}</td>
-                              <td>{prescriber?.optedForBussinessV3?.toString() ?? ''}</td>
-                              <td>{prescriber?.bussinessV1Enabled?.toString() ?? ''}</td>
+                            <tr key={prescriber._id}>
+                              <td>{prescriber.firstName ?? ''}</td>
+                              <td>{prescriber.lastName ?? ''}</td>
+                              <td>{prescriber.email ?? ''}</td>
+                              <td>{prescriber.phoneNumber ?? ''}</td>
+                              <td>{prescriber.credentials ?? ''}</td>
+                              <td>{prescriber.practiceName ?? ''}</td>
+                              <td>{prescriber.practiceAddressLine1 ?? ''}</td>
+                              <td>{prescriber.practiceAddressLine2 ?? ''}</td>
+                              <td>{prescriber.practiceCity ?? ''}</td>
+                              <td>{prescriber.practiceState ?? ''}</td>
+                              <td>{prescriber.practiceZipCode ?? ''}</td>
+                              <td>{prescriber.npiNumber ?? ''}</td>
+                              <td>{prescriber.medicalLicenseState ?? ''}</td>
+                              <td>{prescriber.licenseNumber ?? ''}</td>
+                              <td>{prescriber.optedForBussinessV1?.toString() ?? ''}</td>
+                              <td>{prescriber.optedForBussinessV2?.toString() ?? ''}</td>
+                              <td>{prescriber.optedForBussinessV3?.toString() ?? ''}</td>
+                              <td>{prescriber.bussinessV1Enabled?.toString() ?? ''}</td>
                               <td>
                                 <button
-                                  className={`btn btn-${prescriber?.bussinessV1Enabled ? 'danger' : 'success'}`}
-                                  onClick={() => handleBusinessStatus(prescriber?._id, !prescriber?.bussinessV1Enabled, 'bussinessV1Enabled')}
+                                  className={`btn btn-${prescriber.bussinessV1Enabled ? 'danger' : 'success'}`}
+                                  onClick={() => handleBusinessStatus(prescriber._id, !prescriber.bussinessV1Enabled, 'bussinessV1Enabled')}
                                 >
-                                  {prescriber?.bussinessV1Enabled ? 'Disable' : 'Enable'}
+                                  {prescriber.bussinessV1Enabled ? 'Disable' : 'Enable'}
                                 </button>
                               </td>
-                              <td>{prescriber?.bussinessV2Enabled?.toString() ?? ''}</td>
+                              <td>{prescriber.bussinessV2Enabled?.toString() ?? ''}</td>
                               <td>
                                 <button
-                                  className={`btn btn-${prescriber?.bussinessV2Enabled ? 'danger' : 'success'}`}
-                                  onClick={() => handleBusinessStatus(prescriber?._id, !prescriber?.bussinessV2Enabled, 'bussinessV2Enabled')}
+                                  className={`btn btn-${prescriber.bussinessV2Enabled ? 'danger' : 'success'}`}
+                                  onClick={() => handleBusinessStatus(prescriber._id, !prescriber.bussinessV2Enabled, 'bussinessV2Enabled')}
                                 >
-                                  {prescriber?.bussinessV2Enabled ? 'Disable' : 'Enable'}
+                                  {prescriber.bussinessV2Enabled ? 'Disable' : 'Enable'}
                                 </button>
                               </td>
-                              <td>{prescriber?.bussinessV3Enabled?.toString() ?? ''}</td>
+                              <td>{prescriber.bussinessV3Enabled?.toString() ?? ''}</td>
                               <td>
                                 <button
-                                  className={`btn btn-${prescriber?.bussinessV3Enabled ? 'danger' : 'success'}`}
-                                  onClick={() => handleBusinessStatus(prescriber?._id, !prescriber?.bussinessV3Enabled, 'bussinessV3Enabled')}
+                                  className={`btn btn-${prescriber.bussinessV3Enabled ? 'danger' : 'success'}`}
+                                  onClick={() => handleBusinessStatus(prescriber._id, !prescriber.bussinessV3Enabled, 'bussinessV3Enabled')}
                                 >
-                                  {prescriber?.bussinessV3Enabled ? 'Disable' : 'Enable'}
+                                  {prescriber.bussinessV3Enabled ? 'Disable' : 'Enable'}
                                 </button>
                               </td>
-                              <td>{prescriber?.isVerifiedPrescriber?.toString() ?? ''}</td>
+                              <td>{prescriber.isVerifiedPrescriber?.toString() ?? ''}</td>
                               <td>
                                 <button
-                                  className={`btn btn-${prescriber?.isVerifiedPrescriber ? 'danger' : 'success'}`}
-                                  onClick={() => handleVerificationStatus(prescriber?._id, !prescriber?.isVerifiedPrescriber)}
+                                  className={`btn btn-${prescriber.isVerifiedPrescriber ? 'danger' : 'success'}`}
+                                  onClick={() => handleVerificationStatus(prescriber._id, !prescriber.isVerifiedPrescriber)}
                                 >
-                                  {prescriber?.isVerifiedPrescriber ? 'Reject / Disable Account' : 'Approve'}
+                                  {prescriber.isVerifiedPrescriber ? 'Reject' : 'Approve'}
                                 </button>
                               </td>
                             </tr>
