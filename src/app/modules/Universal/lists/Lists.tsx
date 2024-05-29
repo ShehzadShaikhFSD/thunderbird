@@ -304,7 +304,7 @@ const Lists = () => {
                                   className={`btn btn-${prescriber.isVerifiedPrescriber ? 'danger' : 'success'}`}
                                   onClick={() => handleVerificationStatus(prescriber._id, !prescriber.isVerifiedPrescriber)}
                                 >
-                                  {prescriber.isVerifiedPrescriber ? 'Reject' : 'Approve'}
+                                  {prescriber.isVerifiedPrescriber ? 'Reject / Disable Prescriber ' : 'Approve'}
                                 </button>
                               </td>
                             </tr>
