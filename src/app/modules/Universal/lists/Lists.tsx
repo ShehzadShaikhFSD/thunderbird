@@ -129,7 +129,7 @@ const Lists = () => {
               return prescriber;
             })
           );
-          alert(`Prescriber ${status ? 'enabled' : 'disabled'} for ${vertical}`);
+          alert(`Prescriber ${status ? 'Approved' : 'disabled'} for ${vertical}`);
         } else {
           throw new Error('Failed to update business status');
         }
@@ -238,15 +238,15 @@ const Lists = () => {
                             <th>NPI Number</th>
                             <th>Medical License State</th>
                             <th>License Number</th>
-                            <th>Opted for Bussiness V1</th>
-                            <th>Opted for Bussiness V2</th>
-                            <th>Opted for Bussiness V3</th>
-                            <th>Bussiness V1 Enabled</th>
-                            <th>Actions for Bussiness V1</th>
-                            <th>Bussiness V2 Enabled</th>
-                            <th>Actions for Bussiness V2</th>
-                            <th>Bussiness V3 Enabled</th>
-                            <th>Actions for Bussiness V3</th>
+                            <th>Opted for Bussiness Vertical 1</th>
+                            <th>Opted for Bussiness Vertical 2</th>
+                            <th>Opted for Bussiness Vertical 3</th>
+                            <th>Approve Bussiness Vertical 1 </th>
+                            <th>Actions for Bussiness Vertical 1</th>
+                            <th>Approve Bussiness Vertical 2</th>
+                            <th>Actions for Bussiness Vertical 2</th>
+                            <th>Approve Bussiness Vertical 3</th>
+                            <th>Actions for Bussiness Vertical 3</th>
                             <th>Is Verified Prescriber</th>
                             <th>Actions</th>
                           </tr>
@@ -277,7 +277,7 @@ const Lists = () => {
                                   className={`btn btn-${prescriber.bussinessV1Enabled ? 'danger' : 'success'}`}
                                   onClick={() => handleBusinessStatus(prescriber._id, !prescriber.bussinessV1Enabled, 'bussinessV1Enabled')}
                                 >
-                                  {prescriber.bussinessV1Enabled ? 'Disable' : 'Enable'}
+                                  {prescriber.bussinessV1Enabled ? 'Disable' : 'Approve'}
                                 </button>
                               </td>
                               <td>{prescriber.bussinessV2Enabled?.toString() ?? ''}</td>
@@ -286,7 +286,7 @@ const Lists = () => {
                                   className={`btn btn-${prescriber.bussinessV2Enabled ? 'danger' : 'success'}`}
                                   onClick={() => handleBusinessStatus(prescriber._id, !prescriber.bussinessV2Enabled, 'bussinessV2Enabled')}
                                 >
-                                  {prescriber.bussinessV2Enabled ? 'Disable' : 'Enable'}
+                                  {prescriber.bussinessV2Enabled ? 'Disable' : 'Approve'}
                                 </button>
                               </td>
                               <td>{prescriber.bussinessV3Enabled?.toString() ?? ''}</td>
@@ -295,7 +295,7 @@ const Lists = () => {
                                   className={`btn btn-${prescriber.bussinessV3Enabled ? 'danger' : 'success'}`}
                                   onClick={() => handleBusinessStatus(prescriber._id, !prescriber.bussinessV3Enabled, 'bussinessV3Enabled')}
                                 >
-                                  {prescriber.bussinessV3Enabled ? 'Disable' : 'Enable'}
+                                  {prescriber.bussinessV3Enabled ? 'Disable' : 'Approve'}
                                 </button>
                               </td>
                               <td>{prescriber.isVerifiedPrescriber?.toString() ?? ''}</td>
