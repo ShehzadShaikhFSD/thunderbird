@@ -238,21 +238,28 @@ const Lists = () => {
                             <th>NPI Number</th>
                             <th>Medical License State</th>
                             <th>License Number</th>
-                            <th>Opted for Bussiness Vertical 1</th>
-                            <th>Opted for Bussiness Vertical 2</th>
-                            <th>Opted for Bussiness Vertical 3</th>
-                            <th>Approve Bussiness Vertical 1 </th>
-                            <th>Actions for Bussiness Vertical 1</th>
-                            <th>Approve Bussiness Vertical 2</th>
-                            <th>Actions for Bussiness Vertical 2</th>
-                            <th>Approve Bussiness Vertical 3</th>
-                            <th>Actions for Bussiness Vertical 3</th>
+                            <th>Opted for weight management
+                               {/* weight management */}
+                               </th>
+                            <th>Opted for BHRT
+                              {/* BHRT */}
+                              </th>
+                            <th>Opted for Sexual wellness
+                              {/* Sexual wellness */}
+                              
+                              </th>
+                            <th>Approve weight management </th>
+                            <th>Actions for weight management</th>
+                            <th>Approve BHRT</th>
+                            <th>Actions for BHRT</th>
+                            <th>Approve Sexual wellness</th>
+                            <th>Actions for Sexual wellness</th>
                             <th>Is Verified Prescriber</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {prescribers.map(prescriber => (
+                          {[...prescribers].reverse().map(prescriber => (
                             <tr key={prescriber._id}>
                               <td>{prescriber.firstName ?? ''}</td>
                               <td>{prescriber.lastName ?? ''}</td>
@@ -268,10 +275,10 @@ const Lists = () => {
                               <td>{prescriber.npiNumber ?? ''}</td>
                               <td>{prescriber.medicalLicenseState ?? ''}</td>
                               <td>{prescriber.licenseNumber ?? ''}</td>
-                              <td>{prescriber.optedForBussinessV1?.toString() ?? ''}</td>
-                              <td>{prescriber.optedForBussinessV2?.toString() ?? ''}</td>
-                              <td>{prescriber.optedForBussinessV3?.toString() ?? ''}</td>
-                              <td>{prescriber.bussinessV1Enabled?.toString() ?? ''}</td>
+                              <td>{prescriber.optedForBussinessV1?.toString() === 'true' ? 'Yes' : 'No'}</td>
+<td>{prescriber.optedForBussinessV2?.toString() === 'true' ? 'Yes' : 'No'}</td>
+<td>{prescriber.optedForBussinessV3?.toString() === 'true' ? 'Yes' : 'No'}</td>
+                              <td>{prescriber.bussinessV1Enabled?.toString() === 'true' ? 'Approved' : 'Disabled'}</td>
                               <td>
                                 <button
                                   className={`btn btn-${prescriber.bussinessV1Enabled ? 'danger' : 'success'}`}
@@ -280,7 +287,7 @@ const Lists = () => {
                                   {prescriber.bussinessV1Enabled ? 'Disable' : 'Approve'}
                                 </button>
                               </td>
-                              <td>{prescriber.bussinessV2Enabled?.toString() ?? ''}</td>
+                              <td>{prescriber.bussinessV2Enabled?.toString() === 'true' ? 'Approved' : 'Disabled'}</td>
                               <td>
                                 <button
                                   className={`btn btn-${prescriber.bussinessV2Enabled ? 'danger' : 'success'}`}
@@ -289,7 +296,7 @@ const Lists = () => {
                                   {prescriber.bussinessV2Enabled ? 'Disable' : 'Approve'}
                                 </button>
                               </td>
-                              <td>{prescriber.bussinessV3Enabled?.toString() ?? ''}</td>
+                              <td>{prescriber.bussinessV3Enabled?.toString() === 'true' ? 'Approved' : 'Disabled'}</td>
                               <td>
                                 <button
                                   className={`btn btn-${prescriber.bussinessV3Enabled ? 'danger' : 'success'}`}
@@ -298,7 +305,7 @@ const Lists = () => {
                                   {prescriber.bussinessV3Enabled ? 'Disable' : 'Approve'}
                                 </button>
                               </td>
-                              <td>{prescriber.isVerifiedPrescriber?.toString() ?? ''}</td>
+                              <td>{prescriber.isVerifiedPrescriber?.toString() === 'true' ? 'Approved' : 'Disabled'}</td>
                               <td>
                                 <button
                                   className={`btn btn-${prescriber.isVerifiedPrescriber ? 'danger' : 'success'}`}
