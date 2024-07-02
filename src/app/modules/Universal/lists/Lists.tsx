@@ -70,7 +70,7 @@ const Lists = () => {
   };
 
   const fetchPrescribers = (token: string) => {
-    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescribers', {
+    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescribers?page=1&limit=10000', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
