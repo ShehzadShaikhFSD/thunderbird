@@ -102,7 +102,7 @@ const Lists = () => {
       });
   };
   const handleBusinessStatus = (id: string, status: boolean, vertical: string) => {
-    fetch(`http://localhost:7786/api/v1/admin/update-business-verification-status/${id}`, {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-business-verification-status/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

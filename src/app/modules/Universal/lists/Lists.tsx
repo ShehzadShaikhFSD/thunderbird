@@ -76,7 +76,10 @@ const Lists = () => {
       },
     })
       .then(response => response.json())
-      .then(data => setPrescribers(data))
+      .then(data => { 
+        setPrescribers(data.prescribers)
+        console.log(data)
+       } )
       .catch(error => console.error('Error fetching data:', error));
   };
 
@@ -239,21 +242,17 @@ const Lists = () => {
                             <th>Medical License State</th>
                             <th>License Number</th>
                             <th>Opted for weight management
-                               {/* weight management */}
                                </th>
-                            <th>Opted for BHRT
-                              {/* BHRT */}
-                              </th>
                             <th>Opted for Sexual wellness
-                              {/* Sexual wellness */}
-                              
+                              </th>
+                            <th>Opted for BHRT
                               </th>
                             <th>Approve weight management </th>
                             <th>Actions for weight management</th>
-                            <th>Approve BHRT</th>
-                            <th>Actions for BHRT</th>
-                            <th>Approve Sexual wellness</th>
+                            <th>Approve Sexual wellness </th>
                             <th>Actions for Sexual wellness</th>
+                            <th>Approve  BHRT</th>
+                            <th>Actions for  BHRT</th>
                             <th>Is Verified Prescriber</th>
                             <th>Actions</th>
                           </tr>
