@@ -151,13 +151,15 @@ const Prescriptions: React.FC = () => {
   useEffect(() => {
     const fetchPrescriptions = async () => {
       try {
-        const response = await fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescriptions');
+        const response = await fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescriptions?limit=10000');
         if (!response.ok) {
           throw new Error('Failed to fetch prescriptions');
         }
         const data: ApiResponse = await response.json();
-        setOrders(data.order);
-        setCountOfOrders(data.countOfOrders);
+        console.log(data)
+        console.log(data.order)
+        // setOrders(data.order);
+        setCountOfOrders(data.totalOrders);
       } catch (error) {
         console.error('Error fetching prescriptions:', error);
       }
@@ -174,7 +176,7 @@ const Prescriptions: React.FC = () => {
         <div key={order._id} style={{ border: '1px solid #ddd', margin: '10px', padding: '10px' }}>
           <h2>Order ID: {order._id}</h2>
           <h3>Patient Details</h3>
-          <p>Name: {order.patient.firstName} {order.patient.lastName}</p>
+          <p>Name: {order?.patient?.firstName} {order?.patient?.lastName}</p>
           <p>Email: {order.patient.email}</p>
           <p>Phone Number: {order.patient.phoneNumber}</p>
           <p>Address: {order.patient.addressLine1}, {order.patient.city}, {order.patient.state} {order.patient.zipcode}</p>
