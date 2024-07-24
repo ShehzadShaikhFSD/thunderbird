@@ -142,6 +142,7 @@ interface Order {
 interface ApiResponse {
   countOfOrders: number;
   order: Order[];
+  totalOrders : number;
 }
 
 const Prescriptions: React.FC = () => {
@@ -159,7 +160,7 @@ const Prescriptions: React.FC = () => {
         console.log(data)
         console.log(data.order)
         // setOrders(data.order);
-        setCountOfOrders(data.totalOrders);
+        setCountOfOrders(data?.totalOrders);
       } catch (error) {
         console.error('Error fetching prescriptions:', error);
       }
