@@ -2,7 +2,7 @@ import React from 'react';
 
 const Checkout: React.FC = () => {
   const handleClick = () => {
-    fetch("https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/payments/stripe/create-checkout-session", {
+    fetch("https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/payments/stripe/create-checkout-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

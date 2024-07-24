@@ -83,7 +83,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ show, onHide, patientName, pres
       };
 
       // Make a POST request to place the order
-      const response = await axios.post('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/place-order', payload, {
+      const response = await axios.post('https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/prescribers/place-order', payload, {
         headers: {
           Authorization: `Bearer ${token}`, // Set Authorization header with token
         },
