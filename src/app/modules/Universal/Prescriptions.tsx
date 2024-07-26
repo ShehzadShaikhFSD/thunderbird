@@ -152,7 +152,7 @@ const Prescriptions: React.FC = () => {
   useEffect(() => {
     const fetchPrescriptions = async () => {
       try {
-        const response = await fetch('https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/admin/prescriptions?limit=10000');
+        const response = await fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescriptions?limit=10000');
         if (!response.ok) {
           throw new Error('Failed to fetch prescriptions');
         }

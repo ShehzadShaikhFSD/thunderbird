@@ -53,7 +53,7 @@ const Wrapper = () => {
         const token = cookies.get('TOKEN');
 
   
-        const response = await fetch(`https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/prescribers/prescriber/${id}`, {
+        const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/prescriber/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`, // Set Authorization header with token
           },

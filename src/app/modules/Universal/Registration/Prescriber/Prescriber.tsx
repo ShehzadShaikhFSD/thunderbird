@@ -37,7 +37,7 @@ const Prescriber = () => {
     // Add your form submission logic here
     console.log(formData);
     try {
-      const response = await fetch('https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/prescribers/create-prescriber', {
+      const response = await fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/prescribers/create-prescriber', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

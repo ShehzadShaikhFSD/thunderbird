@@ -47,7 +47,7 @@ const PatientList: React.FC<PatientListProps> = ({ id, isVerifiedPrescriber   })
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await fetch(`https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/patients/getByPrescriber/${id}`);
+        const response = await fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/patients/getByPrescriber/${id}`);
         const data = await response.json();
         setPatients(data);
         setFilteredPatients(data);

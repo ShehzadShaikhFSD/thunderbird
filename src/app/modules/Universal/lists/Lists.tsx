@@ -42,7 +42,7 @@ const Lists = () => {
   const [token, setToken] = useState<string | null>(null);
 
   const handleLoginClick = () => {
-    fetch('https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/admin/signin', {
+    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const Lists = () => {
   };
 
   const fetchPrescribers = (token: string) => {
-    fetch('https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/admin/prescribers?page=1&limit=10000', {
+    fetch('https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/prescribers?page=1&limit=10000', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -84,7 +84,7 @@ const Lists = () => {
   };
 
   const handleVerificationStatus = (id: string, status: boolean) => {
-    fetch(`https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/admin/update-verification-status/${id}`, {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-verification-status/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ const Lists = () => {
   };
 
   const handleBusinessStatus = (id: string, status: boolean, vertical: string) => {
-    fetch(`https://production-redcircle-e4c6af6e6b63.herokuapp.com/api/v1/admin/update-business-verification-status/${id}`, {
+    fetch(`https://development-redcircle-fb2ace51f4d4.herokuapp.com/api/v1/admin/update-business-verification-status/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
